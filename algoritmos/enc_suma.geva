@@ -5,25 +5,26 @@
 "   Victor Montero Barboza      "
 "   Jorge Aguero Zamora         "
 
+    "Se almacena en la posicion 0 y los siguientes"
+    "16 bytes la clave para la suma               "
+    "Hay que repetir este codigo 16 veces para    "
+    "completar el tamaño de la llave              "
+    ci      #0, r0
+    ci      #8, r2
+    cie     r2, #8, r2
+    ci      #9, r2
+    ge      r2, r0
 
     "carga dirección donde se encuentra"
     "la dirección de la imagen original"
-    ci      r0, #0
-
-    "r1 contador de posición en al imagen"
-    ci      r1, #0
-
-
-    "NECESITAMOS CARGAR LA CLAVE PARA LA SUMA"
-    "OPCION, CARGAR INMEDIATOS EN LOS REGISTROS VECTORIALES"
-    "asumimos que la clave ya se encuentra almacenada en v1"
-
-    "Como vamos a almacenar la imagen en memoria RAM?"
+    "donde va a estar? debemos ver como cargarla a memoria"
+    "asumimos que esta cargada en memoria a partir del byte 16"
+    ci      r0, #16
 
 @repetir 4096
     "Este codigo debe repetirse 4096 veces"
     cv      r0, v0
-    "para el desencriptado hacemos una suma"
+    "para el desencriptado hacemos una resta"
     "o tenemos el vector con los complementos de la clave?"
     sv      v0, v1, v0
     si      r0, #16, r0
