@@ -1,0 +1,28 @@
+"Código fuente Arquitectura geva"
+"Autores:                       "
+"   Michael Gonzalez Rivera     "
+"   Erick Cordero Rojas         "
+"   Victor Montero Barboza      "
+"   Jorge Aguero Zamora         "
+
+
+    "carga dirección donde se encuentra"
+    "la dirección de la imagen original"
+    ci      r0, #0
+
+    "r1 contador de posición en al imagen"
+    ci      r1, #0
+
+
+    "NECESITAMOS CARGAR LA CLAVE PARA EL XOR"
+    "OPCION, CARGAR INMEDIATOS EN LOS REGISTROS VECTORIALES"
+    "asumimos que la clave ya se encuentra almacenada en v1"
+
+@repetir 4096
+    "Este codigo debe repetirse 4096 veces"
+    cv      r0, v0
+    "para el desencriptado hacemos una suma"
+    "o tenemos el vector con los complementos de la clave?"
+    XORV    v0, v1, v0
+    si      r0, #16, r0
+@finrepetir
