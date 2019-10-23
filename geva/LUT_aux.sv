@@ -25,7 +25,7 @@
 				Prof. Jefferson Gonzales
 ***********************************************
 **/
-module LUT #(parameter N = 8)
+module LUT_aux #(parameter N = 8)
 		(input logic [N-1:0] Vec1
 		 output logic [N-1:0] lut_vec);
 
