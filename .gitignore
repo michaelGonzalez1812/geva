@@ -3,6 +3,8 @@ work/
 transcript
 *.wlf
 *.mti
+*.mpf
+geva/*.c
 geva/db/
 geva/incremental_db/
 geva/output_files/

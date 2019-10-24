@@ -26,7 +26,7 @@
 ***********************************************
 **/
 module LUT #(parameter N = 128)
-		(input logic [N-1:0] Vec1
+		(input logic [N-1:0] Vec1,
 		 output logic [N-1:0] lut_vec);
 
         //valores temprales 
@@ -48,7 +48,7 @@ module LUT #(parameter N = 128)
 	    logic [7:0] tmp16;
 
         //dividimos el vector en partes
-	    logic [7:0] pixel1 = [7:0]Vec1;
+	    logic [7:0] pixel1 = Vec1[7:0];
 	    logic [7:0] pixel2 = [15:8]Vec2;
 	    logic [7:0] pixel3 = [23:16]Vec3;
 	    logic [7:0] pixel4 = [31:24]Vec4;
