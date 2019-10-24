@@ -1,4 +1,8 @@
 geva/work/
+work/
+transcript
+*.wlf
+*.mti
 geva/db/
 geva/incremental_db/
 geva/output_files/

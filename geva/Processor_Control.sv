@@ -103,50 +103,22 @@ assign cl_esc_wr = (dec_opcode == INST_CI) ? IMM : (dec_opcode == INST_CE) ? ESC
 //mux control signal for writing to vector reg
 assign cl_vec_wr = (dec_opcode == INST_TB) ? LUT : ((dec_opcode >= 5'b00000) && (dec_opcode <= 5'b01101)) ? ALU : (dec_opcode == INST_CV) ? VEC_MEM : 5'b0;
 
+
+//signal to stall processor on vector operations
 logic stall = ~((((ex_opcode >= 5'b00000) && (ex_opcode <= 5'b01101)) || ((ex_opcode >= 5'b01110) && (ex_opcode <= 5'b10001))) && (~alu_rdy || ~mem_rdy));
 assign pc_en = stall;
 
 assign ex_en = stall;
 
-assign esc_wr_en = (ex_opcode == INST_CI && mem_rdy) || (ex_opcode == INST_CE) || (ex_opcode == INST_CIE) || (ex_opcode == INST_SI);
-//(1 && mem_rdy) || ( 1 && alu_rdy) || (ex_opcode == 5'b10011 || ex_opcode == 5'b10100 )  ;
 
+//enable signal to write escalar reg file
+assign esc_wr_en = (ex_opcode == INST_CI && mem_rdy) || (ex_opcode == INST_CE) || (ex_opcode == INST_CIE) || (ex_opcode == INST_SI);
+
+
+//enable signal to write vector reg file
 assign vec_wr_en = ex_opcode == INST_TB || ((ex_opcode >= 5'b00000) && (ex_opcode <= 5'b01101) && alu_rdy) || (ex_opcode == INST_CV && mem_rdy);
 
-// always_comb
 
-// if
-
-//decode instruction
-// always_comb
-// casex(dec_opcode)
-// //operaciones de memoria
-//     5'b01110: //Cargar Vector
-//         begin
-//             cl_alu_st <= `FALSE ; cl_mem_st <= `TRUE;
-//             cl_esc_wr <= 2'b0; cl_vec_wr <= VEC_REG_MUX.VEC_MEM;
-//         end
-//     5'b01111: //Cargar Escalar
-//         begin
-//             cl_alu_st <= `FALSE ; cl_mem_st <= `TRUE;
-//             cl_esc_wr <= ESC_REG_MUX.ESC_MEM; cl_vec_wr <= 2'b0;
-//         end
-//     5'b10110: //Cargar inmediato*****
-//         begin
-//             cl_alu_st <= `FALSE ; cl_mem_st <= `FALSE; cl_shift_op <= 0;
-//             cl_esc_wr <= ESC_REG_MUX.IMM; cl_vec_wr <= 2'b0;
-//         end
-//     5'b10000: //Guardar Vector
-//         begin
-//             cl_alu_st <= `FALSE ; cl_mem_st <= `TRUE; cl_shift_op <= 0;
-//             cl_esc_wr <= 2'b0; cl_vec_wr <= 2'b0;
-//         end
-//      5'b10001: //Guardar Escalar
-//         begin
-//             cl_alu_st <= `FALSE ; cl_mem_st <= `TRUE; cl_shift_op <= 0;
-//             cl_esc_wr <= 2'b0; cl_vec_wr <= 2'b0;
-//         end
-// endcase
 
 endmodule
 `endif
