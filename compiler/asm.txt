@@ -1,0 +1,33 @@
+
+;sdfsdfs
+
+;hi:
+;ldrgt R9, r3, #7   ;asdasd
+;bne thisisalonglabel
+;addle R11, r7, r5    ;asdasd
+;thisisalonglabel:
+;addle R11, r7, #72    ;asdasd
+;beq hi
+;Wrp r13   ; huehue
+;Wrp r12   ; huehue
+;blt thisisalonglabel
+;rdpne r8   ; huehue
+
+
+
+AND R0, R1, R2
+XOR R0, R1, R2
+SUB R3, R1, R2
+ADD R3, R1, R2
+ORR R3, R1, R2
+CMP R3, R4
+MOV R3, R4
+LSL R3, R1, R2
+LSR R3, R1, R2
+MUL R3, R1, R2
+ADD R3, R4, #3
+LDR R3, R4
+STR R3, R4
+RDP R3
+WRP R3
+STR R3, R4, #1
