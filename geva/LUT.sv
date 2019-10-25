@@ -26,7 +26,7 @@
 ***********************************************
 **/
 module LUT #(parameter N = 128)
-		(input logic [N-1:0] Vec1
+		(input logic [N-1:0] Vec1,
 		 output logic [N-1:0] lut_vec);
 
         //valores temprales 
@@ -48,25 +48,41 @@ module LUT #(parameter N = 128)
 	    logic [7:0] tmp16;
 
         //dividimos el vector en partes
-	    logic [7:0] pixel1 = [7:0]Vec1;
-	    logic [7:0] pixel2 = [15:8]Vec2;
-	    logic [7:0] pixel3 = [23:16]Vec3;
-	    logic [7:0] pixel4 = [31:24]Vec4;
-	    logic [7:0] pixel5 = [39:31]Vec5;
-	    logic [7:0] pixel6 = [47:40]Vec6;
-	    logic [7:0] pixel7 = [55:48]Vec7;
-	    logic [7:0] pixel8 = [63:56]Vec8;
-	    logic [7:0] pixel9 = [71:64]Vec9;
-	    logic [7:0] pixel10 = [79:72]Vec10;
-	    logic [7:0] pixel11 = [87:80]Vec11;
-	    logic [7:0] pixel12 = [95:88]Vec12;
-	    logic [7:0] pixel13 = [103:96]Vec13;
-	    logic [7:0] pixel14 = [111:104]Vec14;
-	    logic [7:0] pixel15 = [119:112]Vec15;
-	    logic [7:0] pixel16 = [127:120]Vec16;
+	    logic [7:0] pixel1;
+		logic [7:0] pixel3;
+	    logic [7:0] pixel2;
+		logic [7:0] pixel4;
+		logic [7:0] pixel5;
+		logic [7:0] pixel6;
+		logic [7:0] pixel7;
+		logic [7:0] pixel8;
+		logic [7:0] pixel9;
+		logic [7:0] pixel10;
+		logic [7:0] pixel11;
+		logic [7:0] pixel12;
+		logic [7:0] pixel13;
+		logic [7:0] pixel14;
+		logic [7:0] pixel15;
+		logic [7:0] pixel16;
 
+		assign pixel2 = Vec1 [15:8];
+		assign pixel1 = Vec1 [7:0];
+		assign pixel3 = Vec1 [23:16];
+		assign pixel4 = Vec1 [31:24];
+		assign pixel5 = Vec1 [39:32];
+		assign pixel6 = Vec1 [47:40];
+		assign pixel7 = Vec1 [55:48];
+		assign pixel8 = Vec1 [63:56];
+		assign pixel9 = Vec1 [71:64];
+		assign pixel10 = Vec1 [79:72];
+		assign pixel11 = Vec1 [87:80];
+		assign pixel12 = Vec1 [95:88];
+		assign pixel13 = Vec1 [103:96];
+		assign pixel14 = Vec1 [111:104];
+		assign pixel15 = Vec1 [119:112];
+		assign pixel16 = Vec1 [127:120];
 
-
+		//obtenemos el valor del lut para cada datos
         LUT_aux lut1(pixel1,tmp1);
         LUT_aux lut2(pixel2,tmp2);
         LUT_aux lut3(pixel3,tmp3);
@@ -84,6 +100,7 @@ module LUT #(parameter N = 128)
         LUT_aux lut15(pixel15,tmp15);
         LUT_aux lut16(pixel16,tmp16);
 
-        assing lut_vec = {tmp16,tmp15,tmp14,tmp13,tmp12,tmp11,tmp10,tmp9,tmp8,tmp7,tmp6,tmp5,tmp4,tmp3,tmp2,tmp1};
+		//unimos la salida
+        assign lut_vec = {tmp16,tmp15,tmp14,tmp13,tmp12,tmp11,tmp10,tmp9,tmp8,tmp7,tmp6,tmp5,tmp4,tmp3,tmp2,tmp1};
 
 endmodule 
