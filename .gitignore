@@ -16,3 +16,4 @@ geva/*.mem
 geva/wlft*
 geva/test*
 geva/ArquitecturaHybridARMIPS_assignment_defaults.qdf
+*.bak

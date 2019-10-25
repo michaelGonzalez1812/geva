@@ -1,9 +1,7 @@
-module Reg_N #(
-    WIDTH = 8
-)(
+module Reg_N #( parameter WIDTH = 8)
+    (
     input logic clk, en,
     input logic [WIDTH-1:0] d_data,
-
     output logic [WIDTH-1:0] q_data
 );
     
