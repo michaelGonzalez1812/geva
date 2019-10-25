@@ -4,6 +4,8 @@ transcript
 *.wlf
 *.mti
 *.mpf
+*.qpf
+*.qsf
 geva/*.c
 geva/db/
 geva/incremental_db/
