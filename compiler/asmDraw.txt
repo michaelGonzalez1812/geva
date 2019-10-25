@@ -1,0 +1,66 @@
+ADD R2, R5, #2011 ;valor que se deberia ver en la memoria de pix
+NOP
+NOP
+NOP 
+NOP
+WRP R2 ; set the pixel in coordinates given in R0(x) and R1(y) to the color indicated in R2 
+NOP
+NOP
+NOP 
+NOP
+ADD R1, R5, #1  
+WRP R2 ; set the pixel in coordinates given in R0(x) and R1(y) to the color indicated in R2 
+NOP
+NOP
+NOP 
+NOP
+ADD R1, R5, #2  
+WRP R2 ; set the pixel in coordinates given in R0(x) and R1(y) to the color indicated in R2 
+NOP
+NOP
+NOP 
+NOP
+ADD R1, R5, #3  
+WRP R2 ; set the pixel in coordinates given in R0(x) and R1(y) to the color indicated in R2 
+NOP
+NOP
+NOP 
+NOP
+ADD R1, R5, #4  
+WRP R2 ;set the pixel in coordinates given in R0(x) and R1(y) to the color indicated in R2 
+NOP
+NOP
+NOP 
+NOP
+ADD R1, R5, #5  
+WRP R2 ; set the pixel in coordinates given in R0(x) and R1(y) to the color indicated in R2 
+NOP
+NOP
+NOP 
+NOP
+ADD R1, R5, #6  
+WRP R2 ; set the pixel in coordinates given in R0(x) and R1(y) to the color indicated in R2 
+NOP
+NOP
+NOP 
+NOP
+ADD R1, R5, #7  
+WRP R2 ; set the pixel in coordinates given in R0(x) and R1(y) to the color indicated in R2 
+NOP
+NOP
+NOP 
+NOP
+ADD R1, R5, #8  
+WRP R2 ; set the pixel in coordinates given in R0(x) and R1(y) to the color indicated in R2 
+NOP
+NOP
+NOP 
+NOP
+ADD R1, R5, #9  
+WRP R2 ; set the pixel in coordinates given in R0(x) and R1(y) to the color indicated in R2 
+NOP
+NOP
+NOP 
+NOP
+ADD R1, R5, #10  
+WRP R2 ; set the pixel in coordinates given in R0(x) and R1(y) to the color indicated in R2
