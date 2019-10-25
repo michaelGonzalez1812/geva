@@ -1,4 +1,10 @@
 geva/work/
+work/
+transcript
+*.wlf
+*.mti
+*.mpf
+geva/*.c
 geva/db/
 geva/incremental_db/
 geva/output_files/
@@ -10,3 +16,4 @@ geva/*.mem
 geva/wlft*
 geva/test*
 geva/ArquitecturaHybridARMIPS_assignment_defaults.qdf
+*.bak
