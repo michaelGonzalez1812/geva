@@ -4,7 +4,7 @@
 // MODULE: altsyncram 
 
 // ============================================================
-// File Name: data_mem.v
+// File Name: data_mem_keys.v
 // Megafunction Name(s):
 // 			altsyncram
 //
@@ -36,7 +36,7 @@
 // synopsys translate_off
 `timescale 1 ps / 1 ps
 // synopsys translate_on
-module data_mem (
+module data_mem_keys (
 	address_a,
 	address_b,
 	clock,
@@ -102,12 +102,7 @@ module data_mem (
 		altsyncram_component.clock_enable_output_a = "BYPASS",
 		altsyncram_component.clock_enable_output_b = "BYPASS",
 		altsyncram_component.indata_reg_b = "CLOCK0",
-`ifdef NO_PLI
-		altsyncram_component.init_file = "data_mem.rif"
-`else
-		altsyncram_component.init_file = "img.HEX"
-`endif
-,
+		altsyncram_component.init_file = "keys.HEX",
 		altsyncram_component.init_file_layout = "PORT_A",
 		altsyncram_component.intended_device_family = "Cyclone V",
 		altsyncram_component.lpm_type = "altsyncram",
@@ -169,7 +164,7 @@ endmodule
 // Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC "0"
 // Retrieval info: PRIVATE: MEMSIZE NUMERIC "524288"
 // Retrieval info: PRIVATE: MEM_IN_BITS NUMERIC "0"
-// Retrieval info: PRIVATE: MIFfilename STRING "data_mem.hex"
+// Retrieval info: PRIVATE: MIFfilename STRING "keys.HEX"
 // Retrieval info: PRIVATE: OPERATION_MODE NUMERIC "3"
 // Retrieval info: PRIVATE: OUTDATA_ACLR_B NUMERIC "0"
 // Retrieval info: PRIVATE: OUTDATA_REG_B NUMERIC "1"
@@ -203,7 +198,7 @@ endmodule
 // Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_A STRING "BYPASS"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_B STRING "BYPASS"
 // Retrieval info: CONSTANT: INDATA_REG_B STRING "CLOCK0"
-// Retrieval info: CONSTANT: INIT_FILE STRING "data_mem.hex"
+// Retrieval info: CONSTANT: INIT_FILE STRING "keys.HEX"
 // Retrieval info: CONSTANT: INIT_FILE_LAYOUT STRING "PORT_A"
 // Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone V"
 // Retrieval info: CONSTANT: LPM_TYPE STRING "altsyncram"
@@ -244,10 +239,10 @@ endmodule
 // Retrieval info: CONNECT: @wren_b 0 0 0 0 wren_b 0 0 0 0
 // Retrieval info: CONNECT: q_a 0 0 8 0 @q_a 0 0 8 0
 // Retrieval info: CONNECT: q_b 0 0 32 0 @q_b 0 0 32 0
-// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem.v TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem.inc FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem.cmp FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem.bsf FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem_inst.v TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem_bb.v TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem_keys.v TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem_keys.inc FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem_keys.cmp FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem_keys.bsf FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem_keys_inst.v FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem_keys_bb.v FALSE
 // Retrieval info: LIB_FILE: altera_mf
