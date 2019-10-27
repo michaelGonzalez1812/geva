@@ -112,6 +112,7 @@ module data_mem_bb_test ();
      * lectura vga
      * bloque 2
      *******************************/
+     /*
     initial begin
         #3;
         cpu_addr = 32'd32768;
@@ -128,4 +129,5 @@ module data_mem_bb_test ();
         #2;
         vga_addr = 32'd131072;
 	end
+    */
 endmodule

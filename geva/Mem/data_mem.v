@@ -105,7 +105,7 @@ module data_mem (
 `ifdef NO_PLI
 		altsyncram_component.init_file = "data_mem.rif"
 `else
-		altsyncram_component.init_file = "img.HEX"
+		altsyncram_component.init_file = "data_mem.hex"
 `endif
 ,
 		altsyncram_component.init_file_layout = "PORT_A",
@@ -248,6 +248,6 @@ endmodule
 // Retrieval info: GEN_FILE: TYPE_NORMAL data_mem.inc FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL data_mem.cmp FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL data_mem.bsf FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem_inst.v TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem_bb.v TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem_inst.v FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL data_mem_bb.v FALSE
 // Retrieval info: LIB_FILE: altera_mf

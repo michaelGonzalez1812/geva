@@ -33,9 +33,9 @@ module data_mem_addr_deco (
     output addrs_deco_ctrl_sig addrs_deco_ctrl);
 
     enum bit [1:0] {
-        BLOCK0 = 0, 
-        BLOCK1 = 1, 
-        BLOCK2 = 2
+        BLOCK0 = 2'd0, 
+        BLOCK1 = 2'd1, 
+        BLOCK2 = 2'd2
     } BLOCKS; 
 
     logic [31:0] vga_addr_decoded;

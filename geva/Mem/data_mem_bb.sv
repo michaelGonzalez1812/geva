@@ -37,9 +37,9 @@ module data_mem_bb (
     output logic [31:0] out_data_cpu);
 
     enum bit [1:0] {
-        BLOCK0 = 0, 
-        BLOCK1 = 1, 
-        BLOCK2 = 2
+        BLOCK0 = 2'd0, 
+        BLOCK1 = 2'd1, 
+        BLOCK2 = 2'd2
     } BLOCKS; 
 
     logic [7:0]  out_data_vga_block0;

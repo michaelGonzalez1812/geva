@@ -1,8 +1,8 @@
-
 /**
 ***********************************************
 		Instituto Tecnologico de Costa Rica 
 			Ingenieria en Electronica
+
        
 		Autores: Michael Gonzalez Rivera
 				 Erick Cordero Rojas
@@ -23,6 +23,33 @@
 				Prof. Jefferson Gonzales
 ************************************************/
 
-import interfaces_def_pkg::*;
+`timescale 1 ns / 1 ns
 
-module data_mem_unit (
+
+module data_mem_tb_fpga_test ();
+    logic clk;
+    logic wren_a;
+    logic [7:0] q_a;
+    int contador;
+
+    data_mem_tb_fpga DUT(
+        clk,
+        wren_a,
+        q_a);
+
+    always begin
+		#1
+		clk = ~clk;
+	end
+
+	always@(posedge clk) begin
+		contador <= contador + 1;
+		if (contador >= 15)
+			$stop;
+	end
+
+    initial begin
+        clk = 0;
+        wren_a = 1'b0;
+    end
+endmodule

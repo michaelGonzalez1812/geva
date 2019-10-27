@@ -55,16 +55,14 @@ module data_mem_tb_fpga (
         .q_a ( q_a ),
         .q_b ( q_b )
         );
+		  
+		  
 
-	initial begin
-        address_a = 16'b0;
-        address_b = 14'b0;
-        //data_a = 8'b1;
-        data_b = 32'b0;
-        wren_b = 1'b0;
-    end
+        assign address_a = 16'b0;
+        assign address_b = 14'b0;
 	assign data_a = 8'b1;
-	
+        assign data_b = 32'b10;
+	assign wren_b = 1'b0;
 endmodule
 
 // ============================================================

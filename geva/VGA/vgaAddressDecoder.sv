@@ -1,7 +1,7 @@
 module vgaAddressDecoder #(parameter BASE_IMAGE_XPOS = 10'd150,
-                            BASE_IMAGE_XEDGE = BASE_IMAGE_XPOS + 10'd250, 
+                            BASE_IMAGE_XEDGE = BASE_IMAGE_XPOS + 10'd256, 
                             BASE_IMAGE_YPOS = 10'd80,
-                            BASE_IMAGE_YEDGE = BASE_IMAGE_YPOS + 10'd250)
+                            BASE_IMAGE_YEDGE = BASE_IMAGE_YPOS + 10'd256)
                     (input logic image_select,
                     input logic [9:0] hcnt, vcnt,
 
