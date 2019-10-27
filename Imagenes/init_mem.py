@@ -9,12 +9,12 @@ def init_mem():
     direccion = 0
     f1 = open("init.hex", "a+")
     cont = 0
-    while(cont <= 2047):
-        data = "0000000000000000000000000000000000000000000000000000000000000000000"
+    while(cont <= 65536):
+        data = "00"
         direccionHex = remake(hex(direccion)[2:])
-        f1.write(":20"+direccionHex+"00"+data+"\n")
+        f1.write(":01"+direccionHex+"00"+data+"\n")
         #print(":20"+str(direccionHex)+"00"+data)
-        direccion += 32
+        direccion += 1
         cont += 1
     f1.write(":0A0080000000000000000000000080")
     f1.close()
