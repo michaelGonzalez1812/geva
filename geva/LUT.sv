@@ -65,8 +65,8 @@ module LUT #(parameter N = 128)
 		logic [7:0] pixel15;
 		logic [7:0] pixel16;
 
-		assign pixel2 = Vec1 [15:8];
 		assign pixel1 = Vec1 [7:0];
+		assign pixel2 = Vec1 [15:8];
 		assign pixel3 = Vec1 [23:16];
 		assign pixel4 = Vec1 [31:24];
 		assign pixel5 = Vec1 [39:32];
