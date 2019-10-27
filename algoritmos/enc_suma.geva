@@ -19,7 +19,7 @@
     "la dirección de la imagen original"
     "donde va a estar? debemos ver como cargarla a memoria"
     "asumimos que esta cargada en memoria a partir del byte 16"
-    ci      r0, #16
+    ci      #16, r0
 
 @repetir 4096
     "Este codigo debe repetirse 4096 veces"
