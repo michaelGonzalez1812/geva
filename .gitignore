@@ -19,7 +19,6 @@ geva/test*
 geva/geva.qsf
 geva/geva.qpf
 geva/vsim.wlfgit 
-geva/helper_modules
 geva/greybox_tmp/
 geva/c5_pin_model_dump.txt
 geva/220model/
