@@ -1,10 +1,11 @@
 geva/work/
 work/
 transcript
-*.wlf
-*.mti
-*.mpf
+geva/*.wlf
+geva/*.mti
+geva/*.mpf
 geva/*.c
+geva/*.ver
 geva/db/
 geva/incremental_db/
 geva/output_files/
@@ -15,5 +16,12 @@ geva/*.qws
 geva/*.mem
 geva/wlft*
 geva/test*
+geva/geva.qsf
+geva/geva.qpf
+geva/vsim.wlfgit 
+geva/helper_modules
+geva/greybox_tmp/
+geva/c5_pin_model_dump.txt
+geva/220model/
 geva/ArquitecturaHybridARMIPS_assignment_defaults.qdf
 *.bak
