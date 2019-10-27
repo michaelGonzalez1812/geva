@@ -10,16 +10,15 @@ def getAllData(data,n):
     all_data = list()
     while(x < n):
         tmp = data[x]
-        all_data.append(remake(str(hex(tmp[0])[2:])))
-        all_data.append(remake(str(hex(tmp[1])[2:])))
-        all_data.append(remake(str(hex(tmp[2])[2:])))
+        promedio = (tmp[0]+tmp[1]+tmp[2])//3
+        all_data.append(remake(str(hex(promedio)[2:])))
         x += 1
     return all_data
 
 im = Image.open("ee.bmp", "r")
 pix_val = getAllData(list(im.getdata()),len(list(im.getdata())))
 n = len(pix_val)
-
+print(n)
 
 def getRgb(rgb_values):
     return remake(str(hex(rgb_values[0])[2:]))+remake(str(hex(rgb_values[1])[2:]))+remake(str(hex(rgb_values[2])[2:]))

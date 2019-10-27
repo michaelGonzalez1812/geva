@@ -1,7 +1,7 @@
 module Regfile_N #(parameter WIDTH = 32)
                     (input logic clk,
 					input logic we,
-					input logic [3:0] rd_addr1, rd_addr2, wr_addr,
+					input logic [2:0] rd_addr1, rd_addr2, wr_addr,
 					input logic [WIDTH-1:0] wr_data,
 					output logic [WIDTH-1:0] reg1_data, reg2_data);
 					
