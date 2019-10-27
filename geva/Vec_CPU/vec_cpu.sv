@@ -81,7 +81,7 @@ alu_module seg_pipe_alu(
     clk, reset, ex_alu_st, 
     ex_alu_op,
     ex_reg2_data,
-    input logic [63:0] vec1, vec2,
+    ex_vec1_data, ex_vec2_data,
 
     output logic alu_rdy,
     output logic [63:0] vec_result

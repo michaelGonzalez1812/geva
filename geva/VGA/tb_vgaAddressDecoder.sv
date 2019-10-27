@@ -10,7 +10,7 @@ parameter PERIOD  = 2;
 // vgaAddressDecoder Inputs
 logic clk =0;
 logic reset =1;
-logic image_select                   = 0 ;
+logic image_select                   = 1 ;
 
 logic [9:0] hcnt =0;
 logic [9:0] vcnt=0;
