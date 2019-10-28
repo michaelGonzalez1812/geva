@@ -1,24 +1,17 @@
-//algoritmo de excriptación con xor
+ci #0, r0
+ci #10, r1
+ci #2, r2
+ci #30, r3
+ci #40, r4
+ci #50, r5
+ci #60, r6
+ci #70, r7
 
-//r0 contiene la dirección de la clave
-//v0 clave
-ci  #3, r0
-cie r0, #16, r0
-cv  r0, v0
+ge r5, r0
+si r0, #1, r1
+ge r6, r1
 
-//r1 contiene la dirección en al imagen original
-//inicia en 0
-ci  #0, r1
 
-//r2 contiene la dirección en la imagen encriptada
-ci  #2, r2
-cie r2, #16, r2
+cv r0, v1
 
-@repetir 8190
-    //carga pixeles de la imagen original
-    cv   r1, v1
-    xorv v0, v1, v2
-    gv   v2, r2
-    si   r1, #2, r1
-    si   r2, #2, r2
-@finrepetir
+xorv v1, v1, v0

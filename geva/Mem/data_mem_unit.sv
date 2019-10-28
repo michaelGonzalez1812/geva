@@ -63,7 +63,7 @@ module data_mem_unit (
 	);
 	
 	assign wr_en = (( mem_op == ST_VEC  || mem_op == ST_ESC ) && mem_start == 1'b1 ) ? 1'b1 : 1'b0;
-	assign addr = ( mem_op == LD_ESC || mem_op == STR_ESC ) ? base_addr : ctl_flags.addr;
+	assign addr = ( mem_op == LD_ESC || mem_op == ST_ESC ) ? base_addr : ctl_flags.addr;
 	assign data_out_esc = mem_data_read;
 	assign data_to_mem = ( mem_op == ST_VEC ) ? ctl_flags.p_data : data_in_esc;
 endmodule
