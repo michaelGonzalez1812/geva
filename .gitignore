@@ -15,13 +15,13 @@ geva/simulation/
 *.qws
 *.mem
 geva/wlft*
-geva/test*
 geva/geva.qsf
 geva/geva.qpf
 geva/vsim.wlfgit 
 geva/greybox_tmp/
 geva/c5_pin_model_dump.txt
 geva/220model/
+geva/.qsys_edit
 geva/ArquitecturaHybridARMIPS_assignment_defaults.qdf
 *.bak
 modelsim_tests_proyecto_2.cr.mti
