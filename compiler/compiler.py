@@ -42,16 +42,16 @@ writeRepeat = False
 repetitions=0      
 
 # indicates if op is gv or ge
-isG= False
+isC= False
 
 # The following arrays are used to identify the correct sintaxys of the 
 # mnemonics as well as to identify the format of the operation.
 OP_A_FORMAT = ["ANDVE", "ANDVV", "ORVE", "ORVV", 
                "XORE", "XORV", "CDV","CIV", "RD", 
                "RI", "SV", "SVE", "RV", "RVE", "STP",
-               "GV", "GE", "TB"]
+               "CV", "CE", "TB"]
 
-OP_B_FORMAT = ["CV", "CE"]
+OP_B_FORMAT = ["GV", "GE"]
 
 OP_C_FORMAT = ["CDE", "CIE", "SI"]
 
@@ -245,7 +245,7 @@ def getOpEncode(op):
 ###############################################################
 def OperandState(line):
     print("OperandState")
-    global opType,insCounter,encodedLine, isG
+    global opType,insCounter,encodedLine, isC
     splitLine = line.split()
     op = splitLine[insCounter].upper()
     print(op)
@@ -266,8 +266,8 @@ def OperandState(line):
     insCounter+=1
     # encoding 
     encodedLine = editString2(encodedLine,0,4,getOpEncode(op))
-    if (op == 'GV' or op=='GE'):
-        isG = True
+    if (op == 'CV' or op=='CE' or op=="TB"):
+        isC = True
     # checking if is stp state
     if (op == "STP"):
         if insCounter >= len(splitLine) :
@@ -321,10 +321,6 @@ def regDestState(line):
     #or splitLine[insCounter][0] == COMMENT_CHAR
     if opType == 'a' or opType == 'c' or opType == 'd':
         #check if instruction finishes with destination register
-        print("inscoint")
-        print(insCounter)
-        print("len split")
-        print(len(splitLine))
         if insCounter>=len(splitLine): 
             newState="doneState"
             return (newState,line)
@@ -352,7 +348,7 @@ def regDestState(line):
 ###############################################################
 def regSrc1State(line):
     print("regSrc1State")
-    global encodedLine, insCounter
+    global encodedLine, insCounter,isC
     splitLine = line.split()
     src1 = splitLine[insCounter].upper() 
     insCounter+=1
@@ -373,8 +369,12 @@ def regSrc1State(line):
         if src2[len(src2)-1]==",":
             src2=src2[:len(src2)-1]
         if src2 in REGISTERS:
-            newState="regSrc2State"
-            return (newState,line)
+            if isC:
+                newState="regDestState"
+                return (newState,line)    
+            else:
+                newState="regSrc2State"
+                return (newState,line)
         else:
             newState="ErrorState"
             return (newState,"Expected register")
@@ -451,7 +451,7 @@ def immSrc2State(line):
 ###############################################################
 def regSrc2State(line):
     print("regSrc2State")
-    global encodedLine, insCounter, isG
+    global encodedLine, insCounter, isC
     splitLine = line.split()
     src2 = splitLine[insCounter].upper() 
     insCounter+=1
@@ -462,7 +462,7 @@ def regSrc2State(line):
     # for opType b, should finish or have comment
     print(insCounter)
     print(len(splitLine)) 
-    if  insCounter >= len(splitLine) and (opType == 'b' or isG):
+    if  insCounter >= len(splitLine) and (opType == 'b'):
         print('enter')
         newState="doneState"
         return (newState,line)
@@ -471,7 +471,7 @@ def regSrc2State(line):
         return (newState,line)
 
 
-    # For opType a instruction (different than ge and gv) should have destination register next
+    # For opType a instruction (different than CE and CV) should have destination register next
     if insCounter >= len(splitLine) and opType != 'b': 
         newState="ErrorState"
         return (newState,"Expected more arguments")
@@ -542,7 +542,7 @@ def ErrorState(line):
 
 
 def main():
-    global encodedLine, insCounter, lineCounter, repeatFlag 
+    global encodedLine, insCounter, lineCounter, repeatFlag , isC
     global repeatBuffer, writeRepeat, writeLineFlag,repetitions
     F= open("asm.txt","r")
     try:
@@ -596,6 +596,7 @@ def main():
             lineCounter+=1
             line +=1
             writeLineFlag=True
+            isC=False
     if repeatFlag:
         print("Repeate cycle not closed")
     F.close() 

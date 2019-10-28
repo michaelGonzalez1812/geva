@@ -149,3 +149,5 @@ ge r5, r0
 
 //detener
 stp
+
+ce r1, r2
