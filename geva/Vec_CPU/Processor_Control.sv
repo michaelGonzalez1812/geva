@@ -42,6 +42,18 @@ enum bit [1:0]{
     SHFT = 2'd2,
     SUM = 2'd3} ESC_REG_MUX;
 
+
+
+
+  module
+    Processor_Control(
+        input logic alu_rdy, mem_rdy,
+        input logic [4:0] dec_opcode, ex_opcode,
+        output logic pc_en, ex_en, cl_alu_st, cl_mem_st,
+        esc_wr_en, vec_wr_en, cl_shift_op,
+        output logic [1:0] cl_mem_op, cl_esc_wr, cl_vec_wr,
+        output logic [3:0] cl_alu_op);
+		  
 enum bit [4:0]{
     INST_CV = 5'b01110, // cargar vector
     INST_CE = 5'b01111, // cargar escalar
@@ -73,17 +85,7 @@ enum bit [4:0]{
 
     INST_STP = 5'b11111 //	A	Stop	stp
 
-} INST_OPCODE;
-
-
-  module
-    Processor_Control(
-        input logic alu_rdy, mem_rdy,
-        input logic [4:0] dec_opcode, ex_opcode,
-        output logic pc_en, ex_en, cl_alu_st, cl_mem_st,
-        esc_wr_en, vec_wr_en, cl_shift_op,
-        output logic [1:0] cl_mem_op, cl_esc_wr, cl_vec_wr,
-        output logic [3:0] cl_alu_op);
+} INST_OPCODE_X;
 
 //ALU op corresponds to the 4 Least Significant bBts of the opcode
 assign cl_alu_op = dec_opcode [3:0];
@@ -117,7 +119,7 @@ assign ex_en = stall;
 
 
 //enable signal to write escalar reg file
-assign esc_wr_en = (ex_opcode == INST_CI && mem_rdy) || (ex_opcode == INST_CE) || (ex_opcode == INST_CIE) || (ex_opcode == INST_SI);
+assign esc_wr_en = (ex_opcode == INST_CI ) || (ex_opcode == INST_CE && mem_rdy) || (ex_opcode == INST_CIE) || (ex_opcode == INST_SI);
 
 
 //enable signal to write vector reg file

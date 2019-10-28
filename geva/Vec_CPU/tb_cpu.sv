@@ -16,7 +16,7 @@ logic [31:0] mem_data                = 0 ;
 // vec_cpu Outputs
 logic wr_enable                      ;
 logic [31:0] pc, cpu_addr, cpu_data;
-
+logic [7:0]  out_data_vga;
 
 always
 	begin
@@ -25,7 +25,16 @@ end
 
 
 imem inst_mem(pc,
-			instruction);
+            instruction);
+            
+data_mem_bb data_mem(
+    clk,
+    cpu_addr,
+    0,
+    wr_enable,
+    cpu_data,
+	out_data_vga,
+    mem_data);
 
 
 vec_cpu  u_vec_cpu (

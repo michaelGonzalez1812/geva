@@ -5,7 +5,7 @@ logic [15:0] RAM[67:0];
 
 initial
 	// $readmemh("memfile.dat", RAM);
-	$readmemb("testCodeH.dat", RAM);
+	$readmemb("../../testCodeH.dat", RAM);
 assign ir = RAM[a[31:2]]; // word aligned
 
 endmodule

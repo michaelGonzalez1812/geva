@@ -24,28 +24,28 @@ logic [31:0] pc_plus4, inner_pc;
 logic [15:0] inner_instruction;
 
 A_instruction inst_a;
-// assign inst_a = inner_instruction;
+assign inst_a = inner_instruction;
 B_instruction inst_b; 
-// assign inst_b = inner_instruction;
+assign inst_b = inner_instruction;
 C_instruction inst_c;
-// assign inst_c = inner_instruction;
+assign inst_c = inner_instruction;
 D_instruction inst_d;
-// assign inst_d = inner_instruction;
+assign inst_d = inner_instruction;
 
-always_comb begin
-    if(reset)begin
-        inst_a <= 0;
-        inst_b <= 0;
-        inst_c <= 0;
-        inst_d <= 0;
-    end
-    else begin
-        inst_a <= inner_instruction;
-        inst_b <= inner_instruction;
-        inst_c <= inner_instruction;
-        inst_d <= inner_instruction;
-    end
-end
+// always_comb begin
+//     if(reset)begin
+//         inst_a <= 0;
+//         inst_b <= 0;
+//         inst_c <= 0;
+//         inst_d <= 0;
+//     end
+//     else begin
+//         inst_a <= inner_instruction;
+//         inst_b <= inner_instruction;
+//         inst_c <= inner_instruction;
+//         inst_d <= inner_instruction;
+//     end
+// end
 
 //################################ control ################################
 logic alu_rdy, mem_rdy;
