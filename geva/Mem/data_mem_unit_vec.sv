@@ -36,6 +36,7 @@ module data_mem_unit_vec (
     output logic [63:0] vec_data_out,
     output logic mem_ready);
 
+	 
 	enum bit [1:0] { 
 		WAIT       = 2'b00,
 		BEGINING   = 2'b01,
