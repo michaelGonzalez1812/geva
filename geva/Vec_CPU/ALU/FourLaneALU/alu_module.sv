@@ -44,27 +44,27 @@ alu #(8) alu3(reg_alu3_A, reg_alu3_B, int_alu_op, alu3_out, aluFlags3);
 alu #(8) alu4(reg_alu4_A, reg_alu4_B, int_alu_op, alu4_out, aluFlags4);
 
 //Input Registers
-Reg_N #(8) alu1_A(clk, 1'b1, mux_alu1_A, reg_alu1_A);
-Reg_N #(8) alu1_B(clk, 1'b1, mux_alu1_B, reg_alu1_B);
+Reg_N #(8) alu1_A(clk, 1'b1, reset, mux_alu1_A, reg_alu1_A);
+Reg_N #(8) alu1_B(clk, 1'b1, reset, mux_alu1_B, reg_alu1_B);
 
-Reg_N #(8) alu2_A(clk, 1'b1, mux_alu2_A, reg_alu2_A);
-Reg_N #(8) alu2_B(clk, 1'b1, mux_alu2_B, reg_alu2_B);
+Reg_N #(8) alu2_A(clk, 1'b1, reset, mux_alu2_A, reg_alu2_A);
+Reg_N #(8) alu2_B(clk, 1'b1, reset, mux_alu2_B, reg_alu2_B);
 
-Reg_N #(8) alu3_A(clk, 1'b1, mux_alu3_A, reg_alu3_A);
-Reg_N #(8) alu3_B(clk, 1'b1, mux_alu3_B, reg_alu3_B);
+Reg_N #(8) alu3_A(clk, 1'b1, reset, mux_alu3_A, reg_alu3_A);
+Reg_N #(8) alu3_B(clk, 1'b1, reset, mux_alu3_B, reg_alu3_B);
 
-Reg_N #(8) alu4_A(clk, 1'b1, mux_alu4_A, reg_alu4_A);
-Reg_N #(8) alu4_B(clk, 1'b1, mux_alu4_B, reg_alu4_B);
+Reg_N #(8) alu4_A(clk, 1'b1, reset, mux_alu4_A, reg_alu4_A);
+Reg_N #(8) alu4_B(clk, 1'b1, reset, mux_alu4_B, reg_alu4_B);
 
 //Output Registers
-Reg_N #(8) alu1_0(clk, out_en1, alu1_out, vec_result[7:0]);
-Reg_N #(8) alu2_1(clk, out_en1, alu2_out, vec_result[15:8]);
-Reg_N #(8) alu3_2(clk, out_en1, alu3_out, vec_result[23:16]);
-Reg_N #(8) alu4_3(clk, out_en1, alu4_out, vec_result[31:24]);
+Reg_N #(8) alu1_0(clk, out_en1, reset, alu1_out, vec_result[7:0]);
+Reg_N #(8) alu2_1(clk, out_en1, reset, alu2_out, vec_result[15:8]);
+Reg_N #(8) alu3_2(clk, out_en1, reset, alu3_out, vec_result[23:16]);
+Reg_N #(8) alu4_3(clk, out_en1, reset, alu4_out, vec_result[31:24]);
 
-Reg_N #(8) alu1_4(clk, out_en2, alu1_out, vec_result[39:32]);
-Reg_N #(8) alu2_5(clk, out_en2, alu2_out, vec_result[47:40]);
-Reg_N #(8) alu3_6(clk, out_en2, alu3_out, vec_result[55:48]);
-Reg_N #(8) alu4_7(clk, out_en2, alu4_out, vec_result[63:56]);
+Reg_N #(8) alu1_4(clk, out_en2, reset, alu1_out, vec_result[39:32]);
+Reg_N #(8) alu2_5(clk, out_en2, reset, alu2_out, vec_result[47:40]);
+Reg_N #(8) alu3_6(clk, out_en2, reset, alu3_out, vec_result[55:48]);
+Reg_N #(8) alu4_7(clk, out_en2, reset, alu4_out, vec_result[63:56]);
     
 endmodule

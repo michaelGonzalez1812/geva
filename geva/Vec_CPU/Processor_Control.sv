@@ -39,15 +39,15 @@ MEM OPs
         output logic [3:0] cl_alu_op);
 
 enum bit [1:0]{
-    VEC_MEM = 0,
-    ALU = 1,
-    LUT = 2} VEC_REG_MUX;
+    VEC_MEM = 2'd0,
+    ALU = 2'd1,
+    LUT = 2'd2} VEC_REG_MUX;
 
 enum bit [1:0]{
-    IMM = 0,
-    ESC_MEM = 1,
-    SHFT = 2,
-    SUM = 3} ESC_REG_MUX;
+    IMM = 2'd0,
+    ESC_MEM = 2'd1,
+    SHFT = 2'd2,
+    SUM = 2'd3} ESC_REG_MUX;
 
 enum bit [4:0]{
     INST_CV = 5'b01110, // cargar vector
@@ -98,14 +98,16 @@ assign cl_mem_st = (dec_opcode >= 5'b01110) && (dec_opcode <= 5'b10001); //only 
 assign cl_alu_st = (dec_opcode >= 5'b00000) && (dec_opcode <= 5'b01101); //only on ALU vec instructions
 
 //mux control signal for writing to escalar reg
-assign cl_esc_wr = (dec_opcode == INST_CI) ? IMM : (dec_opcode == INST_CE) ? ESC_MEM : (dec_opcode == INST_CDE || dec_opcode == INST_CIE) ? SHFT : (dec_opcode == INST_SI) ? SUM : 5'b0;
+assign cl_esc_wr = (dec_opcode == INST_CI) ? IMM : (dec_opcode == INST_CE) ? ESC_MEM : (dec_opcode == INST_CDE || dec_opcode == INST_CIE) ? SHFT : (dec_opcode == INST_SI) ? SUM : 2'b0;
 
 //mux control signal for writing to vector reg
-assign cl_vec_wr = (dec_opcode == INST_TB) ? LUT : ((dec_opcode >= 5'b00000) && (dec_opcode <= 5'b01101)) ? ALU : (dec_opcode == INST_CV) ? VEC_MEM : 5'b0;
+assign cl_vec_wr = (dec_opcode == INST_TB) ? LUT : ((dec_opcode >= 5'b00000) && (dec_opcode <= 5'b01101)) ? ALU : (dec_opcode == INST_CV) ? VEC_MEM : 2'b0;
 
 
 //signal to stall processor on vector operations
-logic stall = ~((((ex_opcode >= 5'b00000) && (ex_opcode <= 5'b01101)) || ((ex_opcode >= 5'b01110) && (ex_opcode <= 5'b10001))) && (~alu_rdy || ~mem_rdy));
+logic stall;
+assign stall = ~(((ex_opcode >= 5'b00000) && (ex_opcode <= 5'b01101) && ~alu_rdy) || ((ex_opcode >= 5'b01110) && (ex_opcode <= 5'b10001) && ~mem_rdy)) ;
+
 assign pc_en = stall;
 
 assign ex_en = stall;

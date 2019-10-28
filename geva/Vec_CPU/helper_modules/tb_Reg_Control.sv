@@ -9,6 +9,7 @@ parameter PERIOD = 10;
 // Reg_Control Inputs
 logic clk = 0;
 logic en = 0;
+logic reset = 1;
 logic d_cl_alu_st = 0;
 logic d_cl_mem_st = 0;
 logic d_cl_shift_op = 0;
@@ -31,7 +32,7 @@ initial
         forever #(PERIOD / 2) clk = ~clk;
 end
 
-    Reg_Control u_Reg_Control(clk, en,
+    Reg_Control u_Reg_Control(clk, en, reset,
                               d_cl_alu_st, d_cl_mem_st, d_cl_shift_op,
                               d_cl_mem_op, d_cl_esc_wr, d_cl_vec_wr,
                               d_cl_alu_op,
@@ -42,6 +43,8 @@ end
 
 initial begin
 
+    #5;
+    reset = 0;
     en = 1;
     d_cl_alu_st = 1;
     d_cl_mem_st = 1;
