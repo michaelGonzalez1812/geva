@@ -31,7 +31,9 @@ module data_mem_tb_fpga_test ();
     logic wren_a;
     logic [7:0] q_a;
     int contador;
+	 
 
+	 
     data_mem_tb_fpga DUT(
         clk,
         wren_a,
