@@ -13,6 +13,15 @@ module vec_cpu (
     
 
 
+logic [31:0] ex_reg1_data, ex_reg2_data;
+logic [7:0] ex_immediate;
+logic [64:0] ex_vec1_data, ex_vec2_data, vec_result;
+  logic [31:0] mem_data_out_esc;
+   logic [63:0] mem_data_out_vec;
+   logic [31:0] adder_esc_result;
+   logic [31:0] shifter_esc_result;
+
+
 //################################ control ################################
 logic alu_rdy, mem_rdy;
 logic [4:0] dec_opcode = inst_a.opcode, ex_opcode;
@@ -58,33 +67,38 @@ D_instruction inst_d = inner_instruction;
 
 //register files
 logic [2:0] rd_addr1, rd_addr2, wb_register_addr; // coming from execute register
-logic [31:0] wr_data_cccccccc; // to be conected in mux
+logic [31:0] wr_data_esc, wr_data_vec; // to be conected in mux
 logic [31:0] reg1_data, reg2_data;
 logic [64:0] vec1_data, vec2_data;
 
-Regfile_N #(32) escalarRegs(clk, we, inst_a.r1_addr, inst_a.r2_addr, wb_register_addr, wr_data_cccccccc, reg1_data, reg2_data);
+Regfile_N #(32) escalarRegs(clk, we, inst_a.r1_addr, inst_a.r2_addr, wb_register_addr, wr_data_esc, reg1_data, reg2_data);
 
-Regfile_N #(64) vecRegs(clk, we, inst_a.r1_addr, inst_a.r1_addr, wb_register_addr, wr_data_cccccccc, vec1_data, vec2_data);
+Regfile_N #(64) vecRegs(clk, we, inst_a.r1_addr, inst_a.r1_addr, wb_register_addr, wr_data_vec, vec1_data, vec2_data);
 
+assign wr_data_esc = ex_esc_wr == 0 ? {24'b0,ex_immediate} : ex_esc_wr == 1 ? mem_data_out_esc : ex_esc_wr == 2 ?  shifter_esc_result : adder_esc_result;
 
 //######################## Execute ################################
 
-logic [31:0] ex_reg1_data, ex_reg2_data;
-logic [7:0] ex_immediate;
-logic [64:0] ex_vec1_data, ex_vec2_data;
+
 
 Reg_Execute ex_register(clk, ex_en, inst_a.opcode, reg1_data, reg2_data, inst_d.immediate,
     vec1_data, vec2_data, inst_a.wb_addr, ex_opcode, ex_reg1_data, ex_reg2_data,  ex_immediate,
     ex_vec1_data, ex_vec2_data, wb_register_addr);
 
-alu_module seg_pipe_alu(
-    clk, reset, ex_alu_st, 
-    ex_alu_op,
-    ex_reg2_data,
-    ex_vec1_data, ex_vec2_data,
+alu_module seg_pipe_alu(clk, reset, ex_alu_st, ex_alu_op, ex_reg2_data, ex_vec1_data, ex_vec2_data, alu_rdy,
+    vec_result);
 
-    output logic alu_rdy,
-    output logic [63:0] vec_result
-);
+ 
+
+data_mem_unit data_module(clk, ex_mem_st, ex_mem_op, ex_reg1_data, mem_data, ex_reg2_data, ex_vec2_data,
+	cpu_addr, cpu_data, mem_rdy, wr_enable, mem_data_out_esc, mem_data_out_vec);
+    
+
+shifter_module shift_esc ( ex_reg1_data, ex_immediate[4:0], ex_shift_op, shifter_esc_result);
+
+
+logic esc_adder_cout;
+
+adder_n #(32) adder_esc	(ex_reg1_data, {27'b0, ex_immediate}, 0, adder_esc_result, esc_adder_cout);
 
 endmodule
