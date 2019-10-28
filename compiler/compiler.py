@@ -502,6 +502,8 @@ def immSrc1State(line):
     
     # encoding immediate
     src2=src2[1:]
+    if src2[len(src2)-1]==",":
+        src2=src2[:len(src2)-1]
     binarySrc1 = bindigits(int(src2),5)
     encodedLine = editString2(encodedLine,11,15,binarySrc1)
 
@@ -567,10 +569,13 @@ def main():
     m.set_start("Start")
 
     print(FLines)
-
+    line = 1
     lineCounter=1
     for l in FLines:
+        print("Instruction")
         print(lineCounter)
+        print("Line")
+        print(line)
         print(l)
         if m.run(l):
             if writeLineFlag:
@@ -589,6 +594,7 @@ def main():
             encodedLine ="0000000000000000"
             insCounter = 0
             lineCounter+=1
+            line +=1
             writeLineFlag=True
     if repeatFlag:
         print("Repeate cycle not closed")

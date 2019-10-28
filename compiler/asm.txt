@@ -6,17 +6,17 @@
 /   Jorge Aguero Zamora     
 
 // Valores en memoria al iniciar el programa
-// mem[x] : direccion del vector operando 1
-// mem[x] : direccion del vector operando 2
-// mem[x] : direccion del vector resultado
-// mem[x] : direccion del escalar operando 1
-// mem[x] : direccion del escalar resultado
+// mem[0] : direccion del vector operando 1 -> 5
+// mem[1] : direccion del vector operando 2 -> 7
+// mem[2] : direccion del vector resultado -> 9
+// mem[3] : direccion del escalar operando 1 ->11
+// mem[4] : direccion del escalar resultado -> 12
 
-// mem[x] -> mem[x+n] : Vector operando 1, contiene los numeros: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 
-// mem[x] -> mem[x+n] : Vector operando 2, contiene los numeros: 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160 
-// mem[x] -> mem[x+n] : Vector resultado 
-// mem[x] : Escalar operando, contiene el numero: 8
-// mem[x] : Escalar resultado
+// mem[5] -> mem[6] : Vector operando 1, contiene los numeros: 1, 2, 3, 4, 5, 6, 7, 8, 
+// mem[7] -> mem[8] : Vector operando 2, contiene los numeros: 10, 20, 30, 40, 50, 60, 70, 80 
+// mem[9] -> mem[10] : Vector resultado 
+// mem[11] : Escalar operando, contiene el numero: 8
+// mem[12] : Escalar resultado
 
 
 
@@ -42,7 +42,7 @@ ce r1, r5
 // cargar el vector operando 1 al registro v1
 cv r2, v1
 // cargar el vector operando 2 al registro v3
-cv r2, v3
+cv r5, v3
 // cargar el escalar operando 1 al registro r6
 ce r3, r6
 
@@ -50,73 +50,101 @@ ce r3, r6
 
 // ******cambiar esta seccion para probar las demas operaciones con vectores y escalares******  
 
-// prueba AND vector-escalar 
+// prueba AND vector-escalar  se guarda en mem[50]
 andve v1, r6, v2
-
-
+ci #50, r0
+gv v2, r0
+si r0, #2, r0
 
 // prueba AND vector - vector
-// andvv v1, v3, v2
+andvv v1, v3, v2
+gv v2, r0
+si r0, #2, r0
 
 // prueba OR vector - escalar
-// orve v1, r6, v2
+orve v1, r6, v2
+gv v2, r0
+si r0, #2, r0
 
 // prueba OR vector - vector
-// orve v1, v3, v2
+orve v1, v3, v2
+gv v2, r0
+si r0, #2, r0
 
 // prueba XOR vector - escalar
-// xore v1, r6, v2
+xore v1, r6, v2
+gv v2, r0
+si r0, #2, r0
 
 // prueba XOR vector - vector
-// xorv v1, v3, v2
+xorv v1, v3, v2
+gv v2, r0
+si r0, #2, r0
 
 // prueba corrimiento derecha vector - vector
-// cdv v1, v3, v2
+cdv v1, v3, v2
+gv v2, r0
+si r0, #2, r0
 
 // prueba corrimiento izquierda vector - vector
-// civ v1, v3, v2
+civ v1, v3, v2
+gv v2, r0
+si r0, #2, r0
+
 
 // prueba rotacion izquierda vector- vector
-// rd v1, v3, v2
+rd v1, v3, v2
+gv v2, r0
+si r0, #2, r0
 
 // prueba rotacion derecha vector - vector
-// rd v1, v3, v2
+rd v1, v3, v2
+gv v2, r0
+si r0, #2, r0
 
-// prueba corrimiento derecha imm - vector
-// cde r6, #2, r0
+// prueba corrimiento derecha imm - escalar
+cde r6, #2, r0
+gv v2, r0
+si r0, #1, r0
 
-// prueba corrimiento izquierda imm - vector
-// cie r6, #2, r0
+// prueba corrimiento izquierda imm - escalar
+cie r6, #2, r0
+gv v2, r0
+si r0, #1, r0
 
 // prueba suma vector - vector
-// sv v1, v3, v2
+sv v1, v3, v2
+gv v2, r0
+si r0, #2, r0
 
-// prueba suma imm - vector
-// si r6, #16, r0
 
 // prueba suma vector - escalar
-// sve v1, r6, v2
+sve v1, r6, v2
+gv v2, r0
+si r0, #2, r0
 
 // prueba resta vector - vector
-// rv v1, v3, v2
+rv v1, v3, v2
+gv v2, r0
+si r0, #2, r0
 
 // prueba resta vector - escalar
-// rve v1, r6, v2
+rve v1, r6, v2
+gv v2, r0
+si r0, #2, r0
 
 // prueba look up table vector - vector
-// rv v1, v2
+tb v1, v2
+gv v2, r0
+si r0, #2, r0
 // *******************************************************************************************
 
-// guardar resultado de v2
-gv v2, r4
+
 // cargar numero 4 en r1
-ci #4, r1
-// cargar valor de mem[4] en r6, i.e. direccion del escalar resultado en r7
-ce r1, r7
+ci #8, r5
 // guardar escalar operando en posicion de memoria para resultado escalar 
-ge r5, r7
-// guardar escalar resultado en posicion de memoria para resultado escalar 
-// ge r0, r7
+ge r5, r0
+
 
 
 //detener
