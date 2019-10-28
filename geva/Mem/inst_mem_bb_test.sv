@@ -51,9 +51,6 @@ module inst_mem_bb_test ();
         #5
         address = 32'd65538;
 
-        #8
-        address = 32'd131074;
-
         #16
         $stop;
     end
