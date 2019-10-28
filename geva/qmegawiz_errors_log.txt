@@ -1,0 +1,19 @@
+
+
+C:/Documentos/Arqui II/proyecto2/geva/geva/Mem/data_mem_tb_fpga.sv
+
+Oct 28 09AM:48:12>: Illegal filename  extension (.sv).
+
+Do you want to edit the file anyway?
+
+C:/Documentos/Arqui II/proyecto2/geva/geva/Mem/data_mem_tb_fpga.sv
+
+Oct 28 09AM:48:14>: Illegal filename  extension (.sv).
+
+Do you want to edit the file anyway?
+
+C:/Documentos/Arqui II/proyecto2/geva/geva/Mem/data_mem_tb_fpga.sv
+
+Oct 28 09AM:48:14>: Illegal filename  extension (.sv).
+
+Do you want to edit the file anyway?
