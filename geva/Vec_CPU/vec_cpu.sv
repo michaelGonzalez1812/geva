@@ -73,7 +73,7 @@ logic cout;
 
 
 Reg_PC pcReg(clk, pc_en, reset, pc_plus4, inner_pc);
-adder_n #(32) pc_adder(inner_pc, 32'b1, 1'b0, pc_plus4, cout);
+adder_n #(32) pc_adder(inner_pc, 32'd4, 1'b0, pc_plus4, cout);
 
 assign pc = inner_pc;
 
@@ -113,7 +113,7 @@ alu_module seg_pipe_alu(clk, reset, ex_alu_st, ex_alu_op, ex_reg2_data[7:0], ex_
 
 LUT lut_vec(ex_vec2_data, lut_vec_result);
 
-data_mem_unit data_module(clk, ex_mem_st, ex_mem_op, ex_reg1_data, mem_data, ex_reg2_data, ex_vec2_data,
+data_mem_unit data_module(clk, ex_mem_st, reset, ex_mem_op, ex_reg1_data, mem_data, ex_reg2_data, ex_vec2_data,
 	cpu_addr, cpu_data, mem_rdy, wr_enable, mem_data_out_esc, mem_data_out_vec);
     
 

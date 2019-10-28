@@ -9,7 +9,7 @@ module Reg_Control (
     output logic [3:0] q_cl_alu_op
 );
     
-always_ff @(posedge clk)
+always_ff @(negedge clk)
 if (reset) begin
     q_cl_alu_st <= 0;
     q_cl_mem_st <= 0;

@@ -13,9 +13,9 @@ module Reg_Execute(
     output logic [2:0] q_wb_register
 );
 
-always_ff @(posedge clk)
+always_ff @(negedge clk)
 if (reset) begin
-    q_opcode <= 5'b10100;
+    q_opcode <= 5'b11110;
     q_reg1_data <= 32'b0;
     q_reg2_data <= 32'b0;
     q_immediate <= 8'b0;

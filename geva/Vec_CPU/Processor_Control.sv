@@ -29,14 +29,7 @@ MEM OPs
 `ifndef MODULE_P_CONTROL
 `define MODULE_P_CONTROL
 
-    module
-    Processor_Control(
-        input logic alu_rdy, mem_rdy,
-        input logic [4:0] dec_opcode, ex_opcode,
-        output logic pc_en, ex_en, cl_alu_st, cl_mem_st,
-        esc_wr_en, vec_wr_en, cl_shift_op,
-        output logic [1:0] cl_mem_op, cl_esc_wr, cl_vec_wr,
-        output logic [3:0] cl_alu_op);
+  
 
 enum bit [1:0]{
     VEC_MEM = 2'd0,
@@ -82,6 +75,16 @@ enum bit [4:0]{
 
 } INST_OPCODE;
 
+
+  module
+    Processor_Control(
+        input logic alu_rdy, mem_rdy,
+        input logic [4:0] dec_opcode, ex_opcode,
+        output logic pc_en, ex_en, cl_alu_st, cl_mem_st,
+        esc_wr_en, vec_wr_en, cl_shift_op,
+        output logic [1:0] cl_mem_op, cl_esc_wr, cl_vec_wr,
+        output logic [3:0] cl_alu_op);
+
 //ALU op corresponds to the 4 Least Significant bBts of the opcode
 assign cl_alu_op = dec_opcode [3:0];
 
@@ -106,7 +109,7 @@ assign cl_vec_wr = (dec_opcode == INST_TB) ? LUT : ((dec_opcode >= 5'b00000) && 
 
 //signal to stall processor on vector operations
 logic stall;
-assign stall = ~(((ex_opcode >= 5'b00000) && (ex_opcode <= 5'b01101) && ~alu_rdy) || ((ex_opcode >= 5'b01110) && (ex_opcode <= 5'b10001) && ~mem_rdy)) ;
+assign stall = ~(((ex_opcode >= 5'b00000) && (ex_opcode <= 5'b01101) && ~alu_rdy) || ((ex_opcode >= 5'b01110) && (ex_opcode <= 5'b10001) && ~mem_rdy)) || ex_opcode == INST_STP ;
 
 assign pc_en = stall;
 
