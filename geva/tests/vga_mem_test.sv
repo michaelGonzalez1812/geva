@@ -7,6 +7,8 @@ module vga_mem_test (
     logic [31:0] video_address;
     logic [31:0] out_data_cpu;
 	 
+	 
+	 
 
     vgaModule vga (
         .clk ( clk ),
