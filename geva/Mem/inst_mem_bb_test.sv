@@ -49,10 +49,10 @@ module inst_mem_bb_test ();
         address = 32'd2;
         
         #5
-        address = 32'd65537;
+        address = 32'd65538;
 
         #8
-        address = 32'd131072;
+        address = 32'd131074;
 
         #16
         $stop;
