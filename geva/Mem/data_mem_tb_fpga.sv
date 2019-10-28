@@ -36,6 +36,7 @@ module data_mem_tb_fpga (
 	input logic wren_a,
 	output logic [7:0] q_a);
 
+	
 	logic	[15:0]  address_a;
 	logic	[13:0]  address_b;
 	logic	[7:0]  data_a;
