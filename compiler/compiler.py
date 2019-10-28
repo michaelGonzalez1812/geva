@@ -39,15 +39,19 @@ writeRepeat = False
 
 # indicates the amount of times the code in repeatBuffer should be 
 # repeated
-repetitions=0         
+repetitions=0      
+
+# indicates if op is gv or ge
+isC= False
 
 # The following arrays are used to identify the correct sintaxys of the 
 # mnemonics as well as to identify the format of the operation.
 OP_A_FORMAT = ["ANDVE", "ANDVV", "ORVE", "ORVV", 
                "XORE", "XORV", "CDV","CIV", "RD", 
-               "RI", "SV", "SVE", "RV", "RVE", "STP"]
+               "RI", "SV", "SVE", "RV", "RVE", "STP",
+               "CV", "CE", "TB"]
 
-OP_B_FORMAT = ["CV", "CE", "GV", "GE", "TB"]
+OP_B_FORMAT = ["GV", "GE"]
 
 OP_C_FORMAT = ["CDE", "CIE", "SI"]
 
@@ -241,7 +245,7 @@ def getOpEncode(op):
 ###############################################################
 def OperandState(line):
     print("OperandState")
-    global opType,insCounter,encodedLine
+    global opType,insCounter,encodedLine, isC
     splitLine = line.split()
     op = splitLine[insCounter].upper()
     print(op)
@@ -262,26 +266,35 @@ def OperandState(line):
     insCounter+=1
     # encoding 
     encodedLine = editString2(encodedLine,0,4,getOpEncode(op))
+    if (op == 'CV' or op=='CE' or op=="TB"):
+        isC = True
     # checking if is stp state
     if (op == "STP"):
-        if insCounter >= len(splitLine) or splitLine[insCounter][0] != COMMENT_CHAR:
+        if insCounter >= len(splitLine) :
+            newState="doneState"
+            return (newState,line)
+        elif splitLine[insCounter][0] == COMMENT_CHAR:
             newState="doneState"
             return (newState,line)
         else: 
             newState="ErrorState"
         return (newState,"Too many arguments")
-    #changing state, allways to destination register state
+    #changing state, to src 1 state for opType = a, b, c  
     rx = splitLine[insCounter].upper()
-    if rx[len(rx)-1]==",":
-        rx=rx[:len(rx)-1]
-    if rx in REGISTERS:
-        newState="regDestState"
+    if opType !='d':
+        if rx[len(rx)-1]==",":
+            rx=rx[:len(rx)-1]
+        if rx in REGISTERS:
+            newState="regSrc1State"
+            return (newState,line)
+        else:
+            newState="ErrorState"
+            return (newState,"Expected Register")
+    elif opType=='d' and rx[0]=="#":
+        newState="immSrc2State"
         return (newState,line)
-    else:
-        newState="ErrorState"
-        return (newState,"Expected Register")
     newState="ErrorState"
-    return(newState, "Error on operadnd")
+    return(newState, "Error on operand. This should not happen")
 
 ##############################################################
 # Function for destination register state
@@ -305,26 +318,23 @@ def regDestState(line):
     #encoding destination register
     encodedLine = editString2(encodedLine,5,7,getRegisterEncode(rx))
     
-    rn = splitLine[insCounter].upper()
-    if opType == 'a' or opType == 'b' or opType == 'c':
-        
-        if rn[len(rn)-1]==",":
-            rn=rn[:len(rn)-1]
-        #check if next string is valid register
-        if rn in REGISTERS:
-            newState="regSrc1State"
+    #or splitLine[insCounter][0] == COMMENT_CHAR
+    if opType == 'a' or opType == 'c' or opType == 'd':
+        #check if instruction finishes with destination register
+        if insCounter>=len(splitLine): 
+            newState="doneState"
+            return (newState,line)
+        elif splitLine[insCounter][0] == COMMENT_CHAR:
+            newState="doneState"
             return (newState,line)
         else:
             newState="ErrorState"
-            return (newState,"Expected register")
-    elif opType == 'd':
-        
-        if rn[0]=="#":
-            newState="immSrc1State"
-            return (newState,line)
-        else:
-            newState="ErrorState"
-            return (newState,"Expected immediate")
+            return (newState,"Expected end of instruction")
+    else:
+        newState="ErrorState"
+        return (newState,"Un expected operand type")
+
+
 
 ##############################################################
 # Function for register source 1 state
@@ -338,7 +348,7 @@ def regDestState(line):
 ###############################################################
 def regSrc1State(line):
     print("regSrc1State")
-    global encodedLine, insCounter
+    global encodedLine, insCounter,isC
     splitLine = line.split()
     src1 = splitLine[insCounter].upper() 
     insCounter+=1
@@ -349,62 +359,61 @@ def regSrc1State(line):
 
     # verify to go to next state
     
-    # case opType == a
-    if opType == 'a':
-        
+    # case opType == a or b
+    if opType == 'a' or opType == 'b':
         if insCounter >= len(splitLine):
             newState="ErrorState"
             return (newState,"Expected more operands")
-        #src2 must be a register for opType a
+        #src2 must be a register for opType a and b
         src2 = splitLine[insCounter].upper() 
+        if src2[len(src2)-1]==",":
+            src2=src2[:len(src2)-1]
         if src2 in REGISTERS:
-            newState="regSrc2State"
-            return (newState,line)
+            if isC:
+                newState="regDestState"
+                return (newState,line)    
+            else:
+                newState="regSrc2State"
+                return (newState,line)
         else:
             newState="ErrorState"
             return (newState,"Expected register")
     
-    # case opType == b
-    if opType == 'b':
-        # instruction should finish or have comment at the end 
-        # for opType b
-        if insCounter >= len(splitLine) or splitLine[insCounter][0] == COMMENT_CHAR: 
-            newState="doneState"
+    # case opType == c
+    if opType == 'c':
+        # instruction should have imm next
+        # for opType c
+        if insCounter >= len(splitLine): 
+            newState="ErrorState"
+            return (newState,"Expected more operands")
+        imm1 = splitLine[insCounter].upper() 
+        if imm1[0]=="#":
+            newState="immSrc1State"
             return (newState,line)
         else:
             newState="ErrorState"
             return (newState,"More arguments than spected for Type \"b\" operation")
 
-    # case opType == c
-    elif opType == 'c':
-        if insCounter >= len(splitLine):
-            newState="ErrorState"
-            return (newState,line)
-        # src2 must be immediate for opType c
-        src2 = splitLine[insCounter].upper() 
-        if src2[0]=="#":
-            newState="immSrc2State"
-            return (newState,line)
-        else:
-            newState="ErrorState"
-            return (newState,"Ecpected immediate")
-
+    # case opType == d is error
+    elif opType == 'd':
+        newState="ErrorState"
+        return (newState,"Type d operation on src 1 is not possible")
     else:
         newState="ErrorState"
         return (newState,"this should have never happen")
 
 
 ##############################################################
-# Function for immediate source 1 state
-# Encodes the immediate and checks if is end of instruction
+# Function for immediate source 2 state bound to opType d
+# Encodes the immediate and checks if register is next
 # Parameters:
 #   line: string read from file.
 # 
 # Output:
 #   NA
 ###############################################################
-def immSrc1State(line):
-    print("immSrc1State")
+def immSrc2State(line):
+    print("immSrc2State")
     global encodedLine, insCounter
     splitLine = line.split()
     src1 = splitLine[insCounter].upper() 
@@ -412,16 +421,23 @@ def immSrc1State(line):
     
     # encoding immediate
     src1=src1[1:]
+    if src1[len(src1)-1]==",":
+        src1=src1[:len(src1)-1]
     binarySrc1 = bindigits(int(src1),8)
     encodedLine = editString2(encodedLine,8,15,binarySrc1)
-    # instruction should finish or have comment at the end 
+    
+    # instruction should have src register next 
     # for opType d
-    if insCounter >= len(splitLine) or splitLine[insCounter][0] == COMMENT_CHAR: 
-        newState="doneState"
+    if insCounter >= len(splitLine): 
+        newState="ErrorStare"
+        return (newState,"Expected more arguments")
+    dest = splitLine[insCounter].upper() 
+    if dest in REGISTERS:
+        newState="regDestState"
         return (newState,line)
     else:
         newState="ErrorState"
-        return (newState,"More arguments than spected for Type \"d\" operation")
+        return (newState,"Expected register")
 
 
 ##############################################################
@@ -435,36 +451,50 @@ def immSrc1State(line):
 ###############################################################
 def regSrc2State(line):
     print("regSrc2State")
-    global encodedLine, insCounter
+    global encodedLine, insCounter, isC
     splitLine = line.split()
     src2 = splitLine[insCounter].upper() 
     insCounter+=1
-
     # encoding register
-    encodedLine = editString2(encodedLine,8,10,getRegisterEncode(src2))
-
-    
-    # instruction should finish or have comment at the end 
-    # for opType d
-    if insCounter >= len(splitLine) or splitLine[insCounter][0] == COMMENT_CHAR: 
+    if src2[len(src2)-1]==",":
+        src2=src2[:len(src2)-1]
+    encodedLine = editString2(encodedLine,11,13,getRegisterEncode(src2))
+    # for opType b, should finish or have comment
+    print(insCounter)
+    print(len(splitLine)) 
+    if  insCounter >= len(splitLine) and (opType == 'b'):
+        print('enter')
         newState="doneState"
+        return (newState,line)
+    elif splitLine[insCounter][0] == COMMENT_CHAR and opType == 'b':
+        newState="doneState"
+        return (newState,line)
+
+
+    # For opType a instruction (different than CE and CV) should have destination register next
+    if insCounter >= len(splitLine) and opType != 'b': 
+        newState="ErrorState"
+        return (newState,"Expected more arguments")
+    dest = splitLine[insCounter].upper() 
+    if dest in REGISTERS:
+        newState="regDestState"
         return (newState,line)
     else:
         newState="ErrorState"
-        return (newState,"More arguments than spected for Type \"d\" operation")
+        return (newState,"Expected register")
 
 
 ##############################################################
-# Function for immediate source 2 state
-# Encodes the immediate and checks if is end of instruction
+# Function for immediate source 1 state bound to opType c
+# Encodes the immediate and checks if next is register
 # Parameters:
 #   line: string read from file.
 # 
 # Output:
 #   NA
 ###############################################################
-def immSrc2State(line):
-    print("immSrc2State")
+def immSrc1State(line):
+    print("immSrc1State")
     global encodedLine, insCounter
     splitLine = line.split()
     src2 = splitLine[insCounter].upper() 
@@ -472,17 +502,24 @@ def immSrc2State(line):
     
     # encoding immediate
     src2=src2[1:]
+    if src2[len(src2)-1]==",":
+        src2=src2[:len(src2)-1]
     binarySrc1 = bindigits(int(src2),5)
     encodedLine = editString2(encodedLine,11,15,binarySrc1)
 
-    # instruction should finish or have comment at the end 
-    # for opType c
-    if insCounter >= len(splitLine) or splitLine[insCounter][0] == COMMENT_CHAR: 
-        newState="doneState"
+    # instruction should have destination register next
+    # for opType c   
+    if insCounter >= len(splitLine) : 
+        newState="ErrorState"
+        return (newState,"Expected more arguments")
+    
+    dest = splitLine[insCounter].upper() 
+    if dest in REGISTERS:
+        newState="regDestState"
         return (newState,line)
     else:
         newState="ErrorState"
-        return (newState,"More arguments than spected for Type \"c\" operation")
+        return (newState,"Expected a register")
 
 
 
@@ -505,7 +542,7 @@ def ErrorState(line):
 
 
 def main():
-    global encodedLine, insCounter, lineCounter, repeatFlag 
+    global encodedLine, insCounter, lineCounter, repeatFlag , isC
     global repeatBuffer, writeRepeat, writeLineFlag,repetitions
     F= open("asm.txt","r")
     try:
@@ -532,10 +569,14 @@ def main():
     m.set_start("Start")
 
     print(FLines)
-
+    line = 1
     lineCounter=1
     for l in FLines:
+        print("Instruction")
         print(lineCounter)
+        print("Line")
+        print(line)
+        print(l)
         if m.run(l):
             if writeLineFlag:
                 F2.write(encodedLine + "\r")
@@ -553,7 +594,9 @@ def main():
             encodedLine ="0000000000000000"
             insCounter = 0
             lineCounter+=1
+            line +=1
             writeLineFlag=True
+            isC=False
     if repeatFlag:
         print("Repeate cycle not closed")
     F.close() 
