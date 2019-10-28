@@ -1,5 +1,5 @@
 //~ `New testbench
-// `timescale  1ns / 1ps
+`timescale  1ns / 1ps
 
 module tb_cpu;   
 
@@ -11,7 +11,7 @@ parameter PERIOD  = 1;
 logic clk                            = 0 ;
 logic reset                          = 1;
 logic [15:0] instruction             ;
-logic [31:0] mem_data                = 0 ;
+logic [31:0] mem_data;
 
 // vec_cpu Outputs
 logic wr_enable                      ;
@@ -54,6 +54,9 @@ begin
 
     #10;
     reset=0;#10;
+    #100;
+    $stop;
+
     // $finish;
 end
 
