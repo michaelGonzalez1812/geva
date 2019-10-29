@@ -286,7 +286,7 @@ module LUT_aux #(parameter N = 8)
 				8'b11111101: lut_vec = 8'b1101111;
 				8'b11111110: lut_vec = 8'b101110;
 				8'b11111111: lut_vec = 8'b100100;
-                default: lut_vec = 32'b1101; //default 0 
+                default: lut_vec = 8'b1101; //default 0 
             endcase 
         end
 

@@ -24,6 +24,7 @@ geva/220model/
 geva/.qsys_edit
 geva/ArquitecturaHybridARMIPS_assignment_defaults.qdf
 *.bak
+*220model
 modelsim_tests_proyecto_2.cr.mti
 modelsim_tests_proyecto_2.mpf
 Proyecto2.cr.mti

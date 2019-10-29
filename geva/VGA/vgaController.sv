@@ -1,6 +1,6 @@
-module vgaController #(parameter HACTIVE = 10'd635,
-											HFP = 10'd15,
-											HSYN = 10'd95,
+module vgaController #(parameter HACTIVE = 10'd640,
+											HFP = 10'd16,
+											HSYN = 10'd96,
 											HBP = 10'd48,
 											HMAX = HACTIVE + HFP + HSYN + HBP,
 											VBP = 10'd33,//38,
@@ -37,7 +37,7 @@ end
 // Compute sync signals (active low)
 assign hsync = ~((hcnt >= (HACTIVE + HFP)) & (hcnt < (HACTIVE + HFP + HSYN)));
 assign vsync = ~((vcnt >= (VACTIVE + VFP)) & (vcnt < (VACTIVE + VFP + VSYN)));
-assign sync_b = hsync & vsync;
+assign sync_b = (hsync & vsync);
 // Force outputs to black when outside the legal display area
 assign blank_b = (hcnt < HACTIVE) & (vcnt < VACTIVE);
 

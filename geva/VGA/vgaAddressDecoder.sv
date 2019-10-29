@@ -22,7 +22,7 @@ assign is_visible = (hcnt >= BASE_IMAGE_XPOS &&  hcnt <= BASE_IMAGE_XEDGE) && (v
 
 
 assign x_extended = {22'b0,inner_x};
-assign y_mulitply = inner_y * 32'd250;
+assign y_mulitply = inner_y * 32'd256;
 
 assign selected_image_offset = image_select ? base_image_offset : encrypted_image_offset;
 

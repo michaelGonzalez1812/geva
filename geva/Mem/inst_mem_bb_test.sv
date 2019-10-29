@@ -3,6 +3,8 @@
 		Instituto Tecnologico de Costa Rica 
 			Ingenieria en Electronica
 
+				caja negra para los tres 
+                bloques de memoria de instrucciones
        
 		Autores: Michael Gonzalez Rivera
 				 Erick Cordero Rojas
@@ -25,33 +27,31 @@
 
 `timescale 1 ns / 1 ns
 
-
-module data_mem_tb_fpga_test ();
+module inst_mem_bb_test ();
+    
+    logic [31:0] address;
     logic clk;
-    logic wren_a;
-    logic [7:0] q_a;
-    int contador;
-	 
+    logic [15:0] q;
 
-	 
-    data_mem_tb_fpga DUT(
-        clk,
-        wren_a,
-        q_a);
+    inst_mem_bb DUT (
+        .address ( address ),
+        .clock ( clk ),
+        .q ( q )
+    );
 
     always begin
 		#1
 		clk = ~clk;
 	end
 
-	always@(posedge clk) begin
-		contador <= contador + 1;
-		if (contador >= 15)
-			$stop;
-	end
-
     initial begin
         clk = 0;
-        wren_a = 1'b0;
+        address = 32'd2;
+        
+        #5
+        address = 32'd65538;
+
+        #16
+        $stop;
     end
 endmodule

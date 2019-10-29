@@ -1,153 +1,50 @@
-/ Codigo de pureba de instrucciones para ISA GEVA
-/ Autores:                       
-/   Michael Gonzalez Rivera     
-/   Erick Cordero Rojas         
-/   Victor Montero Barboza      
-/   Jorge Aguero Zamora     
+<<<<<<< HEAD
+<<<<<<< HEAD
+//algoritmo de excriptación con xor
 
-// Valores en memoria al iniciar el programa
-// mem[0] : direccion del vector operando 1 -> 5
-// mem[1] : direccion del vector operando 2 -> 7
-// mem[2] : direccion del vector resultado -> 9
-// mem[3] : direccion del escalar operando 1 ->11
-// mem[4] : direccion del escalar resultado -> 12
+//r0 contiene la dirección de la clave
+//v0 clave
+ci  #3, r0
+cie r0, #16, r0
+cv  r0, v0
 
-// mem[5] -> mem[6] : Vector operando 1, contiene los numeros: 1, 2, 3, 4, 5, 6, 7, 8, 
-// mem[7] -> mem[8] : Vector operando 2, contiene los numeros: 10, 20, 30, 40, 50, 60, 70, 80 
-// mem[9] -> mem[10] : Vector resultado 
-// mem[11] : Escalar operando, contiene el numero: 8
-// mem[12] : Escalar resultado
+//r1 contiene la dirección en al imagen original
+//inicia en 0
+ci  #0, r1
 
+//r2 contiene la dirección en la imagen encriptada
+ci  #2, r2
+cie r2, #16, r2
 
+@repetir 8190
+    //carga pixeles de la imagen original
+    cv   r1, v1
+    xorv v0, v1, v2
+    gv   v2, r2
+    si   r1, #2, r1
+    si   r2, #2, r2
+@finrepetir
+=======
+=======
+>>>>>>> 330ba549d46ebf729f0dccef55190f7839972894
+ci #0, r0
+ci #10, r1
+ci #2, r2
+ci #30, r3
+ci #40, r4
+ci #50, r5
+ci #60, r6
+ci #70, r7
 
-// Prueba ci, ce, 
-
-// cargar numero 0 en r1
-ci #0, r1
-// cargar valor de mem[0] en r2, i.e. direccion del vector operando 1 en r2
-ce r1, r2
-// cargar numero 3 en r1
-ci #3, r1
-// cargar valor de mem[3] en r3, i.e. direccion del escalar operando 1 en r3
-ce r1, r3
-// cargar numero 2 en r1
-ci #2, r1
-// cargar valor de mem[2] en r4, i.e. direccion del vector resultado en r4
-ce r1, r4
-// cargar numero 1 en r1
-ci #1, r1
-// cargar valor de mem[1] en r5, i.e. direccion del vector operando 2 en r5
-ce r1, r5
-
-// cargar el vector operando 1 al registro v1
-cv r2, v1
-// cargar el vector operando 2 al registro v3
-cv r5, v3
-// cargar el escalar operando 1 al registro r6
-ce r3, r6
-
-
-
-// ******cambiar esta seccion para probar las demas operaciones con vectores y escalares******  
-
-// prueba AND vector-escalar  se guarda en mem[50]
-andve v1, r6, v2
-ci #50, r0
-gv v2, r0
-si r0, #2, r0
-
-// prueba AND vector - vector
-andvv v1, v3, v2
-gv v2, r0
-si r0, #2, r0
-
-// prueba OR vector - escalar
-orve v1, r6, v2
-gv v2, r0
-si r0, #2, r0
-
-// prueba OR vector - vector
-orve v1, v3, v2
-gv v2, r0
-si r0, #2, r0
-
-// prueba XOR vector - escalar
-xore v1, r6, v2
-gv v2, r0
-si r0, #2, r0
-
-// prueba XOR vector - vector
-xorv v1, v3, v2
-gv v2, r0
-si r0, #2, r0
-
-// prueba corrimiento derecha vector - vector
-cdv v1, v3, v2
-gv v2, r0
-si r0, #2, r0
-
-// prueba corrimiento izquierda vector - vector
-civ v1, v3, v2
-gv v2, r0
-si r0, #2, r0
-
-
-// prueba rotacion izquierda vector- vector
-rd v1, v3, v2
-gv v2, r0
-si r0, #2, r0
-
-// prueba rotacion derecha vector - vector
-rd v1, v3, v2
-gv v2, r0
-si r0, #2, r0
-
-// prueba corrimiento derecha imm - escalar
-cde r6, #2, r0
-gv v2, r0
-si r0, #1, r0
-
-// prueba corrimiento izquierda imm - escalar
-cie r6, #2, r0
-gv v2, r0
-si r0, #1, r0
-
-// prueba suma vector - vector
-sv v1, v3, v2
-gv v2, r0
-si r0, #2, r0
-
-
-// prueba suma vector - escalar
-sve v1, r6, v2
-gv v2, r0
-si r0, #2, r0
-
-// prueba resta vector - vector
-rv v1, v3, v2
-gv v2, r0
-si r0, #2, r0
-
-// prueba resta vector - escalar
-rve v1, r6, v2
-gv v2, r0
-si r0, #2, r0
-
-// prueba look up table vector - vector
-tb v1, v2
-gv v2, r0
-si r0, #2, r0
-// *******************************************************************************************
-
-
-// cargar numero 4 en r1
-ci #8, r5
-// guardar escalar operando en posicion de memoria para resultado escalar 
 ge r5, r0
+si r0, #1, r1
+ge r6, r1
 
 
+cv r0, v1
 
-//detener
-stp
-
-ce r1, r2
+xorv v1, v1, v0
+<<<<<<< HEAD
+>>>>>>> jorge-vecCPU
+=======
+>>>>>>> 330ba549d46ebf729f0dccef55190f7839972894

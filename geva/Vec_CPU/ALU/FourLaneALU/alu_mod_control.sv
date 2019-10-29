@@ -122,6 +122,8 @@ case(alu_op)
         int_alu_op = SUBS_OP;
     INST_RVE ://	A	Resta vector escalar	rve
         int_alu_op = SUBS_OP;
+	 default:
+			int_alu_op = OR_OP;
 endcase
 
 
