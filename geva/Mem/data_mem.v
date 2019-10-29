@@ -103,9 +103,9 @@ module data_mem (
 		altsyncram_component.clock_enable_output_b = "BYPASS",
 		altsyncram_component.indata_reg_b = "CLOCK0",
 `ifdef NO_PLI
-		altsyncram_component.init_file = "./../MEM/data_mem.rif"
+		altsyncram_component.init_file = "MEM/data_mem.rif"
 `else
-		altsyncram_component.init_file = "./../MEM/data_mem.hex"
+		altsyncram_component.init_file = "MEM/data_mem.hex"
 `endif
 ,
 		altsyncram_component.init_file_layout = "PORT_A",

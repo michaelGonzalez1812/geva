@@ -70,7 +70,7 @@ assign  is_vector_escalar = (alu_op == INST_ANDVE) || (alu_op == INST_ORVE) || (
 
 // logic is_vec_esc = ;
 //State register
-always_ff @(posedge clk, posedge reset)
+always_ff @(negedge clk, posedge reset)
     if (reset) 			current_state <= Waiting;
     else 				current_state <= next_state;
             

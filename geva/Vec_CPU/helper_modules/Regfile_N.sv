@@ -11,7 +11,7 @@ logic [WIDTH-1:0] rf[7:0];
 // read two ports combinationally
 // write third port on rising edge of clock
 // register 15 reads PC + 8 instead
-always_ff @(posedge clk)
+always_ff @(negedge clk)
 	
 	if (we) begin //Si el write eneable está activo, trate de escribir
 		

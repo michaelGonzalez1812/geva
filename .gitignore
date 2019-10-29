@@ -33,3 +33,4 @@ vga_addr_decoder_test.mpf
 vgatest.cr.mti
 vgatest.mpf
 vsim.wlf
+compiler/instructionsOut.txt

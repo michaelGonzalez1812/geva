@@ -41,14 +41,17 @@ module data_mem_unit_vec (
 
 	 
 	 
-	enum bit [1:0] { 
-		WAIT       = 2'b00,
-		BEGINING   = 2'b01,
-        MED        = 2'b10,
-        FINISHING  = 2'b11
-    } STATES_TYPES;
+	typedef enum { 
+		WAIT ,
+		BEGINING,
+        MED,
+        FINISHING,
+        STILL_FINISHING,
+        ALMOST_THERE,
+        READY
+    } state_types;
 
-    logic [1:0] state;
+    state_types state;
     logic [31:0] current_addr;
     always_ff @(posedge clk, posedge reset) begin
         if (reset) state = WAIT;
@@ -70,17 +73,41 @@ module data_mem_unit_vec (
                 MED: begin
                     state = FINISHING;
                     //read
-                    vec_data_out[31:0] = mem_data_read;
+                    // vec_data_out[31:0] = mem_data_read;
                     //write
-                    ctl_flags.addr++;
-                    ctl_flags.p_data = vec_data_in [63:32];
+                    ctl_flags.addr += 1;
+                    // ctl_flags.p_data = vec_data_in [63:32];
+                    // ctl_flags.p_data = vec_data_in [31:0];
                 end
 
                 FINISHING: begin
+                    state = STILL_FINISHING;
+                    vec_data_out[31:0] = mem_data_read;
+                    mem_ready = 1'b0;
+                    
+                    //read
+                    // vec_data_out[63:32] = mem_data_read;
+                end
+
+                STILL_FINISHING:begin
+                    state = ALMOST_THERE;
+                    mem_ready = 1'b0;
+                    //read
+                    // vec_data_out[63:32] = mem_data_read;
+                end
+
+                ALMOST_THERE:begin
+                    state = READY;
+                    mem_ready = 1'b0;
+                    //read
+                    vec_data_out[63:32] = mem_data_read;
+                end
+
+                READY: begin
                     state = WAIT;
                     mem_ready = 1'b1;
                     //read
-                    vec_data_out[63:32] = mem_data_read;
+                    // vec_data_out[63:32] = mem_data_read;
                 end
 
                 default: state = WAIT;

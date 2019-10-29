@@ -95,7 +95,7 @@ logic [63:0] vec1_data, vec2_data, wr_data_vec;
 
 Regfile_N #(32) escalarRegs(clk, esc_wr_en, inst_a.r1_addr, inst_a.r2_addr, wb_register_addr, wr_data_esc, reg1_data, reg2_data);
 
-Regfile_N #(64) vecRegs(clk, vec_wr_en, inst_a.r1_addr, inst_a.r1_addr, wb_register_addr, wr_data_vec, vec1_data, vec2_data);
+Regfile_N #(64) vecRegs(clk, vec_wr_en, inst_a.r1_addr, inst_a.r2_addr, wb_register_addr, wr_data_vec, vec1_data, vec2_data);
 
 assign wr_data_esc = ex_esc_wr == 0 ? {24'b0,ex_immediate} : ex_esc_wr == 1 ? mem_data_out_esc : ex_esc_wr == 2 ?  shifter_esc_result : adder_esc_result;
 

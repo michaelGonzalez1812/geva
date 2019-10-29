@@ -102,7 +102,7 @@ module data_mem_keys (
 		altsyncram_component.clock_enable_output_a = "BYPASS",
 		altsyncram_component.clock_enable_output_b = "BYPASS",
 		altsyncram_component.indata_reg_b = "CLOCK0",
-		altsyncram_component.init_file = "./../MEM/keys.hex",
+		altsyncram_component.init_file = "Mem/keys.hex",
 		altsyncram_component.init_file_layout = "PORT_A",
 		altsyncram_component.intended_device_family = "Cyclone V",
 		altsyncram_component.lpm_type = "altsyncram",

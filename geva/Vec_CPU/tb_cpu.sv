@@ -55,7 +55,7 @@ begin
     #10;
     reset=0;#10;
     #100;
-    $stop;
+    // $stop;
 
     // $finish;
 end
