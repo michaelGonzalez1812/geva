@@ -348,15 +348,16 @@ def regDestState(line):
 ###############################################################
 def regSrc1State(line):
     print("regSrc1State")
-    global encodedLine, insCounter,isC
+    global encodedLine, insCounter,isC,opType
     splitLine = line.split()
     src1 = splitLine[insCounter].upper() 
     insCounter+=1
     if src1[len(src1)-1]==",":
         src1=src1[:len(src1)-1]
-
-    encodedLine = editString2(encodedLine,8,10,getRegisterEncode(src1))
-
+    if (opType=='a' or opType=='c'):    
+        encodedLine = editString2(encodedLine,8,10,getRegisterEncode(src1))
+    elif opType =='b':
+        encodedLine = editString2(encodedLine,11,13,getRegisterEncode(src1))
     # verify to go to next state
     
     # case opType == a or b
@@ -458,7 +459,10 @@ def regSrc2State(line):
     # encoding register
     if src2[len(src2)-1]==",":
         src2=src2[:len(src2)-1]
-    encodedLine = editString2(encodedLine,11,13,getRegisterEncode(src2))
+    if (opType=='a' or opType=='c'):    
+        encodedLine = editString2(encodedLine,11,13,getRegisterEncode(src2))
+    elif opType =='b':
+        encodedLine = editString2(encodedLine,8,10,getRegisterEncode(src2))
     # for opType b, should finish or have comment
     print(insCounter)
     print(len(splitLine)) 
