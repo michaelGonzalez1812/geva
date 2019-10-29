@@ -21,7 +21,7 @@ if (reset) begin
     q_immediate <= 8'b0;
     q_vec1_data <= 64'b0;
     q_vec2_data <= 64'b0;
-    q_wb_register <= 64'b0;
+    q_wb_register <= 3'b0;
 end
 else if (en) begin
 q_opcode <= d_opcode;
