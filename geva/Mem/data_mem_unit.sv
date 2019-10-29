@@ -43,10 +43,10 @@ module data_mem_unit (
 	mem_unit_ctl_flags ctl_flags;
 
 	enum bit [1:0] { 
-		LD_VEC = 2'b00,
-		LD_ESC = 2'b01,
-		ST_VEC = 2'b10,
-		ST_ESC = 2'b11
+		LD_VEC = 2'b10,
+		LD_ESC = 2'b11,
+		ST_VEC = 2'b0,
+		ST_ESC = 2'b1
 	} MEM_OP;
 
 	data_mem_unit_vec vec_unit(
