@@ -42,11 +42,11 @@ module geva_tb ();
 		clk = ~clk;
 	end
 
-	always@(posedge clk) begin
-		contador <= contador + 1;
-		if (contador >= 2000)
-			$stop;
-	end
+	// always@(posedge clk) begin
+	// 	contador <= contador + 1;
+	// 	if (contador >= 2000)
+	// 		// $stop;
+	// end
 
     initial begin
         clk = 0;

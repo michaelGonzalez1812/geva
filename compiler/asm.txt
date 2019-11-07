@@ -2,30 +2,92 @@
 
 //r0 contiene la dirección de la clave
 //v0 clave
-ci  #3, r0
-ci #3, r7
-cie r0, #16, r0
-ci #3, r7
-cv  r0, v0
+ci  #0, r0
 
-//r1 contiene la dirección en al imagen original
-//inicia en 0
-ci  #0, r1
 
-//r2 contiene la dirección en la imagen encriptada
-ci  #1, r2
-ci #3, r7
-cie r2, #16, r2
+ci  #1, r1
+ci  #0, r0
 
-//@repetir 8190
+cie r1, #8, r1
+ci  #0, r0
 
-@repetir 8190
-    //carga pixeles de la imagen original
-    cv   r1, v1
-    ci   #3, r7
-    xorv v0, v1, v2
-    gv   v2, r2
-    si   r1, #2, r1
-    si   r2, #2, r2
-    ci   #3, r7
-@finrepetir
+si  r1, #2, r1
+ci  #0, r0
+
+cie r1, #8, r1
+ci  #0, r0
+
+si  r1, #3, r1
+ci  #0, r0
+
+cie r1, #8, r1
+ci  #0, r0
+
+si  r1, #4, r1
+ci  #0, r0
+
+
+
+ci  #5, r2
+ci  #0, r0
+
+cie r2, #8, r2
+ci  #0, r0
+
+si  r2, #6, r2
+ci  #0, r0
+
+cie r2, #8, r2
+ci  #0, r0
+
+si  r2, #7, r2
+ci  #0, r0
+
+cie r2, #8, r2
+ci  #0, r0
+
+si  r2, #8, r2
+ci  #0, r0
+
+ge r1, r0
+
+si r0, #1, r0
+ci #10, r7
+
+ge r2, r0
+
+ci  #0, r0
+cv v0, r0
+
+
+ci  #0, r0
+
+sve v0, r7, v1
+
+ci  #2, r0
+ci  #2, r0
+
+gv v1, r0
+
+ci  #2, r0
+
+cv r0, v7
+
+
+andvv v0, v1, v2
+sv v0, v1, v2
+
+
+ce r0, r7
+
+
+
+
+
+
+
+
+
+
+
+

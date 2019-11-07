@@ -37,7 +37,7 @@ module data_mem_unit_vec (
     input logic wr_en,
     output mem_unit_ctl_flags ctl_flags,
     output logic [63:0] vec_data_out,
-    output logic mem_ready);
+    output logic mem_ready, in_wr_en);
 
 	 
 	 
@@ -53,6 +53,8 @@ module data_mem_unit_vec (
 
     state_types state;
     logic [31:0] current_addr;
+
+    // assign ctl_flags.p_data = vec_data_in [31:0];
     always_ff @(posedge clk, posedge reset) begin
         if (reset) state = WAIT;
         else
@@ -61,13 +63,15 @@ module data_mem_unit_vec (
                     state = (mem_start == 1'b1) ? BEGINING : WAIT;
                     ctl_flags.addr = cpu_addr;
                     mem_ready = 1'b0;
+                    in_wr_en <= 0;
                 end
                 
                 BEGINING: begin
                     state = MED;
                     ctl_flags.addr = cpu_addr;
                     // write
-                    ctl_flags.p_data = vec_data_in [31:0];
+                    in_wr_en = 1;
+                    ctl_flags.p_data = vec_data_in[63:32] ;
                 end
 
                 MED: begin
@@ -76,13 +80,13 @@ module data_mem_unit_vec (
                     // vec_data_out[31:0] = mem_data_read;
                     //write
                     ctl_flags.addr += 1;
-                    // ctl_flags.p_data = vec_data_in [63:32];
+                    ctl_flags.p_data = vec_data_in[31:0] ;
                     // ctl_flags.p_data = vec_data_in [31:0];
                 end
 
                 FINISHING: begin
                     state = STILL_FINISHING;
-                    vec_data_out[31:0] = mem_data_read;
+                    vec_data_out[63:32] = mem_data_read;
                     mem_ready = 1'b0;
                     
                     //read
@@ -92,6 +96,7 @@ module data_mem_unit_vec (
                 STILL_FINISHING:begin
                     state = ALMOST_THERE;
                     mem_ready = 1'b0;
+                    in_wr_en = 0;
                     //read
                     // vec_data_out[63:32] = mem_data_read;
                 end
@@ -100,7 +105,7 @@ module data_mem_unit_vec (
                     state = READY;
                     mem_ready = 1'b0;
                     //read
-                    vec_data_out[63:32] = mem_data_read;
+                    vec_data_out[31:0] = mem_data_read;
                 end
 
                 READY: begin

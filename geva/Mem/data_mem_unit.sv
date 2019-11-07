@@ -49,6 +49,7 @@ module data_mem_unit (
 		ST_ESC = 2'b1
 	} MEM_OP;
 
+	logic in_wr_en;
 	data_mem_unit_vec vec_unit(
 		.clk ( clk ),
 		.reset ( reset ),
@@ -59,10 +60,12 @@ module data_mem_unit (
 		.wr_en ( wr_en ),
 		.ctl_flags ( ctl_flags ),
 		.vec_data_out ( data_out_vec ),
-		.mem_ready ( mem_rdy )
+		.mem_ready ( mem_rdy ),
+		.in_wr_en( in_wr_en)
+
 	);
 	
-	assign wr_en = (( mem_op == ST_VEC  || mem_op == ST_ESC ) && mem_start == 1'b1 ) ? 1'b1 : 1'b0;
+	assign wr_en = (( mem_op == ST_VEC  || mem_op == ST_ESC ) && in_wr_en == 1'b1 ) ? 1'b1 : 1'b0;
 	assign addr = ( mem_op == LD_ESC || mem_op == ST_ESC ) ? base_addr : ctl_flags.addr;
 	assign data_out_esc = mem_data_read;
 	assign data_to_mem = ( mem_op == ST_VEC ) ? ctl_flags.p_data : data_in_esc;

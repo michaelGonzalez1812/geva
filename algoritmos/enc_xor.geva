@@ -3,8 +3,10 @@
 //r0 contiene la dirección de la clave
 //v0 clave
 ci  #3, r0
+ci  #3, r0
 cie r0, #16, r0
-cv  r0, v0
+cie r0, #16, r0
+cv  v0, r0
 
 //r1 contiene la dirección en al imagen original
 //inicia en 0
