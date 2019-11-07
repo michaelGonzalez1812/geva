@@ -50,10 +50,9 @@ vlog -sv ./Vec_CPU/vec_cpu.sv
 vlog -sv geva.sv
 vlog -sv geva_tb.sv
 
-do wave.do
+
 
 vsim -L altera_mf_ver -L lpm_ver geva_tb
-do wave.do
 
 log -r /*
 run -a
