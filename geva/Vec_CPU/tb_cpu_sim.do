@@ -49,7 +49,7 @@ vlog -sv ./../Vec_CPU/vec_cpu.sv
 
 vlog -sv ./../Vec_CPU/tb_cpu.sv
 
-vsim -L altera_mf_ver -L lpm_ver tb_cpu
+    vsim -L altera_mf_ver -L lpm_ver tb_cpu
 
 log -r /*
 run -a
