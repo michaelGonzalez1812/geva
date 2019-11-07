@@ -73,7 +73,7 @@ logic cout;
 
 
 Reg_PC pcReg(clk, pc_en, reset, pc_plus4, inner_pc);
-adder_n #(32) pc_adder(inner_pc, 32'd4, 1'b0, pc_plus4, cout);
+adder_n #(32) pc_adder(inner_pc, 32'd1, 1'b0, pc_plus4, cout);
 
 assign pc = inner_pc;
 
